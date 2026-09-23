@@ -4,7 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { primaryNav } from "@/lib/site";
+import Image from "next/image";
+import { primaryNav, site } from "@/lib/site";
+import logo from "@/assets/logo-epsig.png";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -18,12 +20,8 @@ export default function Nav() {
   return (
     <nav className="sticky top-0 z-50 border-b border-line bg-surface/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="group flex items-center gap-2 font-display text-lg font-bold">
-          <span
-            className="h-2.5 w-2.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-125"
-            aria-hidden
-          />
-          EPSIG
+        <Link href="/" className="flex items-center" aria-label={`${site.name} — Inicio`}>
+          <Image src={logo} alt={site.name} loading="eager" className="h-9 w-auto sm:h-10" />
         </Link>
 
         <ul className="hidden items-center gap-0.5 text-sm lg:flex">

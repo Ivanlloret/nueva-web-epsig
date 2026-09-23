@@ -1,6 +1,11 @@
 export const site = {
   name: "EPSIG Consultores",
   legalName: "EPSIG CONSULTORES SL",
+  legalForm: "Sociedad de Responsabilidad Limitada (unipersonal)",
+  nif: "B98839400",
+  registeredAddress: "Calle Doctor Moratal 1, 4.º dcha., 03740 Gata de Gorgos (Alicante)",
+  // Fuente: BORME-A-2016-137-03 (19/07/2016), anuncio 299224.
+  registry: "Registro Mercantil de Alicante, Tomo 3962, Folio 29, Sección 8, Hoja A-150952, Inscripción 1.ª",
   foundedYear: 2017,
   tagline: "El sistema que ayuda a tu empresa a funcionar mejor.",
   description:

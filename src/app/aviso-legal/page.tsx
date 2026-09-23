@@ -13,22 +13,41 @@ export default function AvisoLegalPage() {
       <PageHero eyebrow="Legal" title="Aviso legal" />
       <section className="py-16 sm:py-20">
         <div className="prose-legal mx-auto max-w-3xl px-6 text-[15px] leading-relaxed text-ink-soft">
-          <p className="mb-4 rounded-brand border border-line bg-surface-alt p-4 text-sm text-ink">
-            <strong>Pendiente de revisión legal:</strong> este texto es una plantilla de
-            partida. Antes de publicarlo hay que completar los datos registrales (CIF,
-            datos de inscripción en el Registro Mercantil) y que un asesor jurídico lo
-            revise.
-          </p>
-
-          <h2 className="mt-8 mb-3 text-xl text-ink">1. Datos identificativos</h2>
+          <h2 className="mb-3 text-xl text-ink">1. Datos identificativos</h2>
           <p>
             En cumplimiento del deber de información recogido en el artículo 10 de la Ley
             34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del
-            Comercio Electrónico, se informa que el titular de este sitio web es{" "}
-            <strong>{site.legalName}</strong>, con CIF <em>[pendiente]</em> y domicilio en{" "}
-            {site.offices[0].address}, {site.offices[0].locality}, inscrita en el Registro
-            Mercantil <em>[pendiente]</em>. Correo de contacto: {site.email}.
+            Comercio Electrónico (LSSI-CE), se informa de los datos del titular de este
+            sitio web:
           </p>
+          <ul className="mt-3 flex flex-col gap-1.5">
+            <li>
+              <strong className="text-ink">Titular:</strong> {site.legalName}
+            </li>
+            <li>
+              <strong className="text-ink">Forma jurídica:</strong> {site.legalForm}
+            </li>
+            <li>
+              <strong className="text-ink">NIF:</strong> {site.nif}
+            </li>
+            <li>
+              <strong className="text-ink">Domicilio social:</strong> {site.registeredAddress}
+            </li>
+            {site.registry && (
+              <li>
+                <strong className="text-ink">Datos registrales:</strong> {site.registry}
+              </li>
+            )}
+            <li>
+              <strong className="text-ink">Teléfono:</strong> {site.phones[0]}
+            </li>
+            <li>
+              <strong className="text-ink">Correo electrónico:</strong>{" "}
+              <a href={`mailto:${site.email}`} className="text-primary hover:underline">
+                {site.email}
+              </a>
+            </li>
+          </ul>
 
           <h2 className="mt-8 mb-3 text-xl text-ink">2. Objeto</h2>
           <p>
@@ -52,7 +71,16 @@ export default function AvisoLegalPage() {
             están protegidos por la normativa de propiedad intelectual e industrial.
           </p>
 
-          <h2 className="mt-8 mb-3 text-xl text-ink">5. Legislación aplicable</h2>
+          <h2 className="mt-8 mb-3 text-xl text-ink">5. Responsabilidad</h2>
+          <p>
+            {site.legalName} no garantiza la inexistencia de errores en el acceso al sitio
+            web ni en su contenido, aunque pondrá todos los medios a su alcance para
+            evitarlos o subsanarlos. {site.legalName} no se responsabiliza de los daños que
+            pudieran derivarse del uso de la información del sitio web ni de los contenidos
+            de sitios de terceros enlazados desde él.
+          </p>
+
+          <h2 className="mt-8 mb-3 text-xl text-ink">6. Legislación aplicable</h2>
           <p>
             Las presentes condiciones se rigen por la legislación española. Para cualquier
             controversia derivada del acceso o uso de este sitio web, las partes se

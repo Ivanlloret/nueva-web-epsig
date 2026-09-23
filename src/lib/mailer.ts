@@ -31,16 +31,17 @@ function singleLine(value: string) {
 
 let transporter: Transporter | undefined;
 
+// Sin SMTP_USER se envía sin autenticar: sirve para "Direct Send" de Microsoft 365
+// (entrega directa al MX del dominio, solo a buzones propios).
 function getTransporter() {
+  const port = Number(process.env.SMTP_PORT ?? 587);
+  const user = process.env.SMTP_USER;
   transporter ??= nodemailer.createTransport({
     host: requiredEnv("SMTP_HOST"),
-    port: Number(process.env.SMTP_PORT ?? 587),
-    secure: Number(process.env.SMTP_PORT ?? 587) === 465,
+    port,
+    secure: port === 465,
     requireTLS: true,
-    auth: {
-      user: requiredEnv("SMTP_USER"),
-      pass: requiredEnv("SMTP_PASS"),
-    },
+    auth: user ? { user, pass: requiredEnv("SMTP_PASS") } : undefined,
   });
   return transporter;
 }

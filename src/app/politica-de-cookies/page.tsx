@@ -13,14 +13,7 @@ export default function PoliticaDeCookiesPage() {
       <PageHero eyebrow="Legal" title="Política de cookies" />
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-6 text-[15px] leading-relaxed text-ink-soft">
-          <p className="mb-4 rounded-brand border border-line bg-surface-alt p-4 text-sm text-ink">
-            <strong>Pendiente de revisión legal:</strong> este sitio, en su versión
-            actual, no instala cookies de analítica ni de publicidad. Si en el futuro se
-            añaden (analítica, chat, mapas embebidos), esta página y el banner de
-            consentimiento correspondiente deberán actualizarse antes de activarlas.
-          </p>
-
-          <h2 className="mt-8 mb-3 text-xl text-ink">¿Qué son las cookies?</h2>
+          <h2 className="mb-3 text-xl text-ink">¿Qué son las cookies?</h2>
           <p>
             Las cookies son pequeños archivos que se almacenan en tu navegador al visitar
             un sitio web. Se usan para recordar información sobre tu visita.
@@ -29,8 +22,15 @@ export default function PoliticaDeCookiesPage() {
           <h2 className="mt-8 mb-3 text-xl text-ink">Cookies que utilizamos</h2>
           <p>
             Este sitio web utiliza únicamente las cookies técnicas estrictamente
-            necesarias para su funcionamiento. No utilizamos cookies de analítica,
-            publicidad o redes sociales.
+            necesarias para su funcionamiento y seguridad. No utilizamos cookies de
+            analítica, publicidad o redes sociales, por lo que no es necesario solicitar tu
+            consentimiento.
+          </p>
+          <p className="mt-3">
+            Nuestro proveedor de seguridad y distribución de contenidos, Cloudflare, puede
+            instalar cookies técnicas (por ejemplo, <code>__cf_bm</code>) para proteger el
+            sitio frente a bots y ataques. Estas cookies no se usan para identificarte ni
+            para fines publicitarios.
           </p>
 
           <h2 className="mt-8 mb-3 text-xl text-ink">Cómo desactivar las cookies</h2>
