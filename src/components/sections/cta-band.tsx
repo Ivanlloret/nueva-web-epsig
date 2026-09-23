@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Reveal from "@/components/reveal";
 
 export default function CtaBand({
@@ -25,19 +22,13 @@ export default function CtaBand({
         }}
       >
         <h2 className="mb-4.5 text-[28px] text-white">{title}</h2>
-        <p className="mb-7 text-mist-soft">{body}</p>
-        <motion.div
-          className="inline-block"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.96 }}
+        <p className="mb-7 text-white/90">{body}</p>
+        <Link
+          href={ctaHref}
+          className="inline-block rounded-full bg-accent-strong px-6.5 py-3.5 text-[14.5px] font-semibold text-white shadow-[0_14px_30px_-10px_rgba(16,185,129,.6)] transition-transform hover:scale-[1.05] active:scale-[0.96]"
         >
-          <Link
-            href={ctaHref}
-            className="inline-block rounded-full bg-accent px-6.5 py-3.5 text-[14.5px] font-semibold text-white shadow-[0_14px_30px_-10px_rgba(16,185,129,.6)] transition-opacity hover:opacity-90"
-          >
-            {ctaLabel}
-          </Link>
-        </motion.div>
+          {ctaLabel}
+        </Link>
       </Reveal>
     </div>
   );

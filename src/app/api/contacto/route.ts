@@ -1,37 +1,71 @@
 import { NextResponse } from "next/server";
 import { sendContactConfirmation, sendContactEmail, type ContactRequest } from "@/lib/mailer";
 import { clientIp, hit } from "@/lib/rate-limit";
+import { site } from "@/lib/site";
 
 const limits = { name: 120, email: 200, phone: 40, company: 160, message: 5000 };
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Solo direcciones simples (sin nombres visibles, listas ni comentarios).
+const emailPattern = /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/;
 
 const MAX_BODY_BYTES = 20_000;
 // Una persona tarda más que esto en rellenar el formulario; un bot, no.
 const MIN_FILL_MS = 3_000;
 const PER_IP = { limit: 5, windowMs: 10 * 60_000 };
-const GLOBAL = { limit: 30, windowMs: 60 * 60_000 };
+// Los topes globales y por destinatario solo afectan al acuse de recibo: la solicitud
+// siempre llega a info@, para que un atacante no pueda bloquear los contactos reales.
+const CONFIRMATIONS_GLOBAL = { limit: 30, windowMs: 60 * 60_000 };
+const CONFIRMATIONS_PER_RECIPIENT = { limit: 1, windowMs: 24 * 60 * 60_000 };
+// Límite de seguridad para no saturar el buzón si se sortea el límite por IP.
+const NOTIFICATIONS_GLOBAL = { limit: 120, windowMs: 60 * 60_000 };
 
-const tooMany = () =>
-  NextResponse.json(
-    { error: "Has enviado demasiadas solicitudes. Inténtalo de nuevo en unos minutos o llámanos." },
-    { status: 429 },
-  );
+const TOO_MANY = "Has enviado demasiadas solicitudes. Inténtalo de nuevo en unos minutos o llámanos.";
+const SEND_FAILED = `No hemos podido enviar tu mensaje. Escríbenos a ${site.email} o llámanos.`;
 
-// Solo se aceptan envíos hechos desde la propia web.
-function sameOrigin(request: Request) {
+// Lee el cuerpo por partes y corta en cuanto supera el límite (no se carga entero en memoria).
+async function readBody(request: Request): Promise<string | null> {
+  const declared = Number(request.headers.get("content-length"));
+  if (declared > MAX_BODY_BYTES) return null;
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > MAX_BODY_BYTES) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  return new TextDecoder().decode(Buffer.concat(chunks));
+}
+
+const siteHost = new URL(site.url).host;
+const isDev = process.env.NODE_ENV === "development";
+
+// Solo se aceptan envíos hechos desde la propia web (o sus subdominios, p. ej. para pruebas).
+function allowedOrigin(request: Request): URL | null {
   const origin = request.headers.get("origin");
-  if (!origin) return false;
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  if (!origin) return null;
   try {
-    return new URL(origin).host === host;
+    const url = new URL(origin);
+    const ok =
+      url.host === siteHost ||
+      url.host.endsWith(`.${siteHost}`) ||
+      (isDev && (url.hostname === "localhost" || url.hostname === "127.0.0.1"));
+    return ok ? url : null;
   } catch {
-    return false;
+    return null;
   }
 }
 
 // Campo trampa relleno o envío instantáneo: es un bot.
-function looksLikeBot(data: Record<string, unknown>) {
+// Sin JavaScript no hay cronómetro, así que en ese caso solo cuenta el campo trampa.
+function looksLikeBot(data: Record<string, unknown>, fromScript: boolean) {
   if (typeof data.website === "string" && data.website.trim() !== "") return true;
+  if (!fromScript) return false;
   const elapsed = Number(data.elapsed);
   return !Number.isFinite(elapsed) || elapsed < MIN_FILL_MS;
 }
@@ -70,52 +104,66 @@ function parseRequest(body: unknown): ContactRequest | string {
 }
 
 export async function POST(request: Request) {
-  if (!sameOrigin(request)) {
+  const origin = allowedOrigin(request);
+  if (!origin) {
     return NextResponse.json({ error: "Solicitud no permitida." }, { status: 403 });
   }
 
-  if (!hit(`ip:${clientIp(request)}`, PER_IP.limit, PER_IP.windowMs)) return tooMany();
+  // Con JavaScript el formulario envía JSON; sin él, un POST de formulario clásico
+  // al que se responde redirigiendo a una página de confirmación o de error.
+  const fromScript = (request.headers.get("content-type") ?? "").includes("application/json");
+  const reply = (status: number, error?: string) => {
+    if (fromScript) return NextResponse.json(error ? { error } : { ok: true }, { status });
+    const page = error ? "/contacto/error/" : "/contacto/enviado/";
+    return NextResponse.redirect(new URL(page, origin), 303);
+  };
 
-  const raw = await request.text().catch(() => "");
-  if (raw.length > MAX_BODY_BYTES) {
-    return NextResponse.json({ error: "La solicitud es demasiado grande." }, { status: 413 });
-  }
+  if (!hit(`ip:${clientIp(request)}`, PER_IP.limit, PER_IP.windowMs)) return reply(429, TOO_MANY);
+
+  const raw = await readBody(request);
+  if (raw === null) return reply(413, "La solicitud es demasiado grande.");
+
   let body: unknown = null;
-  try {
-    body = JSON.parse(raw);
-  } catch {
-    // Se trata como cuerpo vacío.
+  if (fromScript) {
+    try {
+      body = JSON.parse(raw);
+    } catch {
+      // Se trata como cuerpo vacío.
+    }
+  } else {
+    body = Object.fromEntries(new URLSearchParams(raw));
   }
 
   // A los bots se les responde como si todo hubiera ido bien, para no darles pistas.
-  if (body && typeof body === "object" && looksLikeBot(body as Record<string, unknown>)) {
-    return NextResponse.json({ ok: true });
+  if (body && typeof body === "object" && looksLikeBot(body as Record<string, unknown>, fromScript)) {
+    return reply(200);
   }
 
   const parsed = parseRequest(body);
-  if (typeof parsed === "string") {
-    return NextResponse.json({ error: parsed }, { status: 400 });
-  }
+  if (typeof parsed === "string") return reply(400, parsed);
 
-  if (!hit("global", GLOBAL.limit, GLOBAL.windowMs)) return tooMany();
+  if (!hit("notifications", NOTIFICATIONS_GLOBAL.limit, NOTIFICATIONS_GLOBAL.windowMs)) {
+    return reply(429, TOO_MANY);
+  }
 
   try {
     await sendContactEmail(parsed);
   } catch (err) {
     // No se registran los datos del formulario (RGPD), solo el fallo técnico.
     console.error("[contacto] Error enviando el correo:", err instanceof Error ? err.message : err);
-    return NextResponse.json(
-      { error: "No hemos podido enviar tu mensaje. Escríbenos a info@epsigconsultores.com o llámanos." },
-      { status: 500 },
-    );
+    return reply(500, SEND_FAILED);
   }
 
-  // El acuse de recibo es secundario: si falla, la solicitud ya ha llegado a info@.
+  // El acuse de recibo es secundario: si falla o se supera su tope, la solicitud ya ha llegado a info@.
+  const recipient = parsed.email.toLowerCase();
+  const canConfirm =
+    hit(`confirm:${recipient}`, CONFIRMATIONS_PER_RECIPIENT.limit, CONFIRMATIONS_PER_RECIPIENT.windowMs) &&
+    hit("confirmations", CONFIRMATIONS_GLOBAL.limit, CONFIRMATIONS_GLOBAL.windowMs);
   try {
-    await sendContactConfirmation(parsed);
+    if (canConfirm) await sendContactConfirmation(parsed);
   } catch (err) {
     console.error("[contacto] Error enviando el acuse de recibo:", err instanceof Error ? err.message : err);
   }
 
-  return NextResponse.json({ ok: true });
+  return reply(200);
 }

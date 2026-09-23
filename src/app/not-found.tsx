@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/reveal";
-import { site } from "@/lib/site";
+import { site, telHref } from "@/lib/site";
 
 // Next.js ya añade "noindex" a las respuestas 404.
 export const metadata: Metadata = {
@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 const shortcuts = [
   { href: "/servicios", code: "SV", color: "var(--color-primary)", title: "Servicios", body: "Consultoría, digitalización y ciberseguridad" },
   { href: "/servicios/odoo", code: "ERP", color: "var(--color-secondary)", title: "Odoo ERP", body: "Implantación completa de tu sistema de gestión" },
-  { href: "/kit-digital", code: "KD", color: "var(--color-accent)", title: "Kit Digital", body: "Soluciones digitales subvencionadas" },
-  { href: "/kit-consulting", code: "KC", color: "var(--color-chip-amber)", title: "Kit Consulting", body: "Asesoramiento de hasta 24.000 €" },
-  { href: "/precios", code: "€", color: "var(--color-chip-slate)", title: "Precios", body: "Tarifas orientativas, sin sorpresas" },
+  { href: "/kit-digital", code: "KD", color: "var(--color-accent)", title: "Kit Digital", body: "Web, tienda online, CRM y ciberseguridad" },
+  { href: "/kit-consulting", code: "KC", color: "var(--color-chip-amber)", title: "Kit Consulting", body: "Asesoramiento en IA, datos y procesos" },
+  { href: "/servicios/consultoria-empresarial", code: "CE", color: "var(--color-chip-slate)", title: "Consultoría Empresarial", body: "Asesoría económico-financiera, laboral y fiscal" },
   { href: "/nosotros", code: "EP", color: "var(--color-primary-light)", title: "Nosotros", body: "Quiénes somos y cómo trabajamos" },
 ];
 
@@ -123,7 +123,7 @@ export default function NotFound() {
               {site.email}
             </a>{" "}
             o llámanos al{" "}
-            <a href={`tel:+34${site.phones[0].replace(/\s/g, "")}`} className="font-medium text-primary hover:underline">
+            <a href={telHref(site.phones[0])} className="font-medium text-primary hover:underline">
               {site.phones[0]}
             </a>
             .

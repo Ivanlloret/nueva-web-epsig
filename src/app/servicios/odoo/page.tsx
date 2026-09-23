@@ -44,9 +44,13 @@ export default function OdooPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[
+          { label: "Servicios", href: "/servicios" },
+          { label: "Odoo ERP", href: "/servicios/odoo" },
+        ]}
         eyebrow="Servicio estrella · Partner oficial Odoo"
         title="Odoo ERP, implantado por quien entiende de empresa"
-        lead="No vendemos licencias: acompañamos la implantación de principio a fin, desde el diagnóstico hasta el soporte del día a día."
+        lead="No nos limitamos a venderte licencias: acompañamos la implantación de principio a fin, desde el diagnóstico hasta el soporte del día a día."
       />
 
       <section className="py-20 sm:py-24">
@@ -61,7 +65,7 @@ export default function OdooPage() {
             {steps.map((step, index) => (
               <Reveal key={step.n} delay={index * 0.07}>
                 <TiltCard className="rounded-brand border border-line bg-surface p-6">
-                  <span className="font-mono text-sm font-medium text-accent">{step.n}</span>
+                  <span className="font-mono text-sm font-medium text-accent-strong">{step.n}</span>
                   <h3 className="mt-3 mb-2 text-[17px]">{step.title}</h3>
                   <p className="text-[13.5px] leading-relaxed text-ink-soft">{step.body}</p>
                 </TiltCard>
@@ -100,7 +104,7 @@ export default function OdooPage() {
 
       <CtaBand
         title="¿Empezamos con un diagnóstico gratuito de tu empresa?"
-        body="En 30 minutos vemos qué módulos de Odoo necesitas y qué financiación aplica a tu caso."
+        body="En 30 minutos vemos qué módulos de Odoo necesitas y cómo implantarlos en tu empresa."
         ctaLabel="Habla con un consultor Odoo"
       />
     </>

@@ -115,7 +115,7 @@ export async function sendContactConfirmation(request: ContactRequest) {
     "",
     `Gracias por contactar con ${site.name}. Hemos recibido tu mensaje y te responderemos lo antes posible, normalmente en un plazo de 24 a 48 horas laborables.`,
     "",
-    `Si es urgente, puedes llamarnos al ${phones}, de lunes a viernes por la mañana.`,
+    `Si es urgente, puedes llamarnos a cualquiera de estos teléfonos: ${phones} (de lunes a viernes por la mañana).`,
     "",
     "Un saludo,",
     `El equipo de ${site.name}`,
@@ -132,7 +132,7 @@ export async function sendContactConfirmation(request: ContactRequest) {
       <tr><td style="padding:16px 32px 8px;color:#0b1220;font-size:15px;line-height:1.6">
         <p style="margin:0 0 14px">${escapeHtml(greeting)}</p>
         <p style="margin:0 0 14px">Gracias por contactar con <strong>${site.name}</strong>. Hemos recibido tu mensaje y te responderemos lo antes posible, normalmente en un plazo de <strong>24 a 48 horas laborables</strong>.</p>
-        <p style="margin:0 0 14px">Si es urgente, puedes llamarnos al <strong>${phones}</strong>, de lunes a viernes por la mañana.</p>
+        <p style="margin:0 0 14px">Si es urgente, puedes llamarnos a cualquiera de estos teléfonos: <strong>${phones}</strong> (de lunes a viernes por la mañana).</p>
         <p style="margin:0 0 4px">Un saludo,</p>
         <p style="margin:0">El equipo de ${site.name}</p>
       </td></tr>

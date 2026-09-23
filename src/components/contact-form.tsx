@@ -2,19 +2,25 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { site } from "@/lib/site";
 import { motion } from "framer-motion";
+import { site } from "@/lib/site";
 
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const successRef = useRef<HTMLHeadingElement>(null);
   // Momento en que se carga el formulario (trampa de tiempo anti-bots).
   const startedAt = useRef<number | null>(null);
   useEffect(() => {
     startedAt.current = Date.now();
   }, []);
+
+  // Al enviarse, el formulario desaparece: se lleva el foco al mensaje de confirmación.
+  useEffect(() => {
+    if (status === "success") successRef.current?.focus();
+  }, [status]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,21 +56,30 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <motion.div
+        role="status"
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="rounded-brand border border-accent/30 bg-accent-pale p-8 text-center"
       >
-        <h3 className="mb-2 text-lg font-semibold text-ink">¡Gracias! Hemos recibido tu mensaje.</h3>
+        <h3 ref={successRef} tabIndex={-1} className="mb-2 text-lg font-semibold text-ink outline-none">
+          ¡Gracias! Hemos recibido tu mensaje.
+        </h3>
         <p className="text-sm text-ink-soft">
-          Te contactaremos en breve a la dirección que nos has indicado.
+          Te hemos enviado un correo de confirmación y te responderemos lo antes posible.
         </p>
       </motion.div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    // method/action: si JavaScript no llega a cargar, el formulario se envía igualmente por POST.
+    <form
+      method="post"
+      action="/api/contacto/"
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4"
+    >
       {/* Campo trampa: invisible para personas, los bots lo rellenan. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label>
@@ -73,19 +88,23 @@ export default function ContactForm() {
         </label>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field label="Nombre" name="name" required />
-        <Field label="Correo electrónico" name="email" type="email" required />
+        <Field label="Nombre" name="name" autoComplete="name" required />
+        <Field label="Correo electrónico" name="email" type="email" autoComplete="email" required />
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field label="Teléfono" name="phone" />
-        <Field label="Empresa" name="company" />
+        <Field label="Teléfono" name="phone" type="tel" autoComplete="tel" />
+        <Field label="Empresa" name="company" autoComplete="organization" />
       </div>
       <label className="flex flex-col gap-1.5 text-sm font-medium text-ink">
-        Cuéntanos qué necesitas
+        <span>
+          Cuéntanos qué necesitas
+          <RequiredMark />
+        </span>
         <textarea
           name="message"
           required
           rows={5}
+          maxLength={5000}
           className="rounded-xl border border-line bg-surface px-4 py-3 text-[15px] text-ink outline-none transition-colors focus:border-primary"
         />
       </label>
@@ -101,27 +120,27 @@ export default function ContactForm() {
           He leído y acepto la{" "}
           <Link href="/politica-de-privacidad" target="_blank" className="font-medium text-primary hover:underline">
             política de privacidad
+            <span className="sr-only"> (se abre en una pestaña nueva)</span>
           </Link>
-          . <span className="text-accent">*</span>
+          .<RequiredMark />
         </span>
       </label>
 
-      {status === "error" && (
-        <p className="text-sm font-medium text-red-600">{errorMsg}</p>
-      )}
+      {/* Siempre presente para que los lectores de pantalla anuncien el error. */}
+      <p role="alert" className="text-sm font-medium text-red-700 empty:hidden">
+        {status === "error" ? errorMsg : ""}
+      </p>
 
-      <motion.button
+      <button
         type="submit"
         disabled={status === "loading"}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        className="mt-2 self-start rounded-full bg-ink px-7 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-primary disabled:opacity-60"
+        className="mt-2 self-start rounded-full bg-ink px-7 py-3 text-[14px] font-semibold text-white transition hover:scale-[1.03] hover:bg-primary active:scale-[0.97] disabled:opacity-60"
       >
         {status === "loading" ? "Enviando…" : "Enviar mensaje"}
-      </motion.button>
+      </button>
 
-      <p className="mt-2 text-[12px] leading-relaxed text-ink-faint">
-        <strong className="font-semibold text-ink-soft">Información básica sobre protección de datos.</strong>{" "}
+      <p className="mt-2 text-[12px] leading-relaxed text-ink-soft">
+        <strong className="font-semibold text-ink">Información básica sobre protección de datos.</strong>{" "}
         Responsable: {site.legalName}. Finalidad: atender tu solicitud de información o
         diagnóstico. Legitimación: tu consentimiento. Destinatarios: no se ceden datos a
         terceros, salvo obligación legal. Derechos: acceso, rectificación, supresión y otros
@@ -135,27 +154,39 @@ export default function ContactForm() {
   );
 }
 
+function RequiredMark() {
+  return (
+    <span className="text-accent-strong" aria-hidden>
+      {" "}
+      *
+    </span>
+  );
+}
+
 function Field({
   label,
   name,
   type = "text",
   required = false,
+  autoComplete,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  autoComplete?: string;
 }) {
   return (
     <label className="flex flex-col gap-1.5 text-sm font-medium text-ink">
       <span>
         {label}
-        {required ? <span className="text-accent"> *</span> : null}
+        {required ? <RequiredMark /> : null}
       </span>
       <input
         type={type}
         name={name}
         required={required}
+        autoComplete={autoComplete}
         className="rounded-xl border border-line bg-surface px-4 py-3 text-[15px] text-ink outline-none transition-colors focus:border-primary"
       />
     </label>

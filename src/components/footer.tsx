@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CookieSettingsButton from "@/components/cookie-settings-button";
 import logoWhite from "@/assets/logo-epsig-white.png";
-import { footerNav, site } from "@/lib/site";
+import { footerNav, site, telHref } from "@/lib/site";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer className="bg-surface-dark-2 py-16 text-mist-soft">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="mb-11 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_0.8fr]">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_0.9fr]">
           <div>
             <Link href="/" className="inline-flex" aria-label={`${site.name} — Inicio`}>
               <Image src={logoWhite} alt={site.name} className="h-11 w-auto" />
@@ -22,41 +22,36 @@ export default function Footer() {
               <li>
                 <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className="text-mist transition-colors hover:text-white">
                   Facebook
+                  <span className="sr-only"> (se abre en una pestaña nueva)</span>
                 </a>
               </li>
               <li>
                 <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="text-mist transition-colors hover:text-white">
                   Instagram
+                  <span className="sr-only"> (se abre en una pestaña nueva)</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          <div>
-            <FooterHeading>Encuéntranos</FooterHeading>
-            <ul className="flex flex-col gap-4 text-sm leading-relaxed">
-              {site.offices.map((office) => (
-                <li key={office.name}>
-                  <span className="block text-mist">{office.address}</span>
-                  <span className="block text-mist-faint">{office.locality}</span>
-                  {office.hours.map((line) => (
-                    <span key={line} className="mt-1 block text-[12.5px] text-mist-soft">
-                      {line}
-                    </span>
-                  ))}
-                </li>
-              ))}
-            </ul>
+          <FooterCol title="Servicios" items={footerNav.servicios} />
+          <div className="flex flex-col gap-8">
+            <FooterCol title="Asesoría" items={footerNav.asesoria} />
+            <FooterCol title="Programas públicos" items={footerNav.financiacion} />
           </div>
+          <FooterCol title="Empresa" items={footerNav.empresa} />
+        </div>
 
+        <div className="mt-12 mb-11 grid grid-cols-1 gap-10 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_0.9fr]">
           <div>
             <FooterHeading>Contacto</FooterHeading>
             <ul className="flex flex-col gap-2 text-sm">
-              {site.phones.map((phone) => (
-                <li key={phone}>
-                  <a href={`tel:+34${phone.replace(/\s/g, "")}`} className="text-mist transition-colors hover:text-white">
-                    {phone}
+              {site.phoneContacts.map((phone) => (
+                <li key={phone.number}>
+                  <a href={telHref(phone.number)} className="text-mist transition-colors hover:text-white">
+                    {phone.number}
                   </a>
+                  <span className="ml-2 text-xs text-mist-faint">{phone.label}</span>
                 </li>
               ))}
               <li>
@@ -67,7 +62,28 @@ export default function Footer() {
             </ul>
           </div>
 
-          <FooterCol title="Empresa" items={footerNav.empresa} />
+          {site.offices.map((office) => (
+            <div key={office.name}>
+              <FooterHeading>Oficina de {office.name}</FooterHeading>
+              <address className="text-sm leading-relaxed not-italic">
+                <a
+                  href={office.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-mist transition-colors hover:text-white"
+                >
+                  <span className="block">{office.address}</span>
+                  <span className="block text-mist-faint">{office.locality}</span>
+                  <span className="sr-only"> (ver en Google Maps, se abre en una pestaña nueva)</span>
+                </a>
+                {office.hours.map((line) => (
+                  <span key={line} className="mt-1 block text-[12.5px] text-mist-soft">
+                    {line}
+                  </span>
+                ))}
+              </address>
+            </div>
+          ))}
         </div>
 
         <div className="flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-mist-faint md:flex-row md:items-center md:justify-between">
@@ -112,7 +128,8 @@ function FooterCol({
                 rel="noopener noreferrer"
                 className="text-mist transition-colors hover:text-white"
               >
-                {item.label}
+                {item.label} <span aria-hidden>↗</span>
+                <span className="sr-only"> (se abre en una pestaña nueva)</span>
               </a>
             </li>
           ) : (
@@ -130,8 +147,8 @@ function FooterCol({
 
 function FooterHeading({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <h5 className={`mb-4 text-xs font-semibold uppercase tracking-widest text-mist-faint ${className}`}>
+    <h2 className={`mb-4 font-sans text-xs font-semibold uppercase tracking-widest text-mist-faint ${className}`}>
       {children}
-    </h5>
+    </h2>
   );
 }

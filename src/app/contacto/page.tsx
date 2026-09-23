@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageHero from "@/components/page-hero";
 import Reveal from "@/components/reveal";
 import ContactForm from "@/components/contact-form";
-import { site } from "@/lib/site";
+import { site, telHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -14,6 +14,7 @@ export default function ContactoPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[{ label: "Contacto", href: "/contacto" }]}
         eyebrow="Contacto"
         title="Hablemos de tu empresa"
         lead="Una conversación de 30 minutos, sin compromiso, para ver qué necesita tu negocio primero."
@@ -35,16 +36,17 @@ export default function ContactoPage() {
 
               <div>
                 <h3 className="mb-1 text-xs font-semibold uppercase tracking-widest text-ink-soft">
-                  Teléfono
+                  Teléfonos
                 </h3>
                 <div className="flex flex-col gap-0.5">
-                  {site.phones.map((phone) => (
+                  {site.phoneContacts.map((phone) => (
                     <a
-                      key={phone}
-                      href={`tel:${phone.replace(/\s+/g, "")}`}
-                      className="font-medium text-ink"
+                      key={phone.number}
+                      href={telHref(phone.number)}
+                      className="flex items-baseline gap-2 font-medium text-ink hover:text-primary"
                     >
-                      {phone}
+                      {phone.number}
+                      <span className="text-xs font-normal text-ink-soft">{phone.label}</span>
                     </a>
                   ))}
                 </div>

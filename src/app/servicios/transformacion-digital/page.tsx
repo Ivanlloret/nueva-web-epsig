@@ -4,18 +4,22 @@ import ServiceDetail from "@/components/service-detail";
 export const metadata: Metadata = {
   title: "Transformación Digital",
   description:
-    "Automatización, IA y digitalización de procesos para pymes, financiable con Kit Digital y Kit Consulting.",
+    "Automatización, IA y digitalización de procesos para pymes. Agentes Digitalizadores Adheridos y Asesores Digitales de Kit Digital y Kit Consulting.",
 };
 
 export default function TransformacionDigitalPage() {
   return (
     <ServiceDetail
+      breadcrumbs={[
+        { label: "Servicios", href: "/servicios" },
+        { label: "Transformación Digital", href: "/servicios/transformacion-digital" },
+      ]}
       eyebrow="Transformación Digital"
       title="Automatización e IA aplicadas a tu día a día, no a la teoría"
       lead="Digitalizamos los procesos que realmente te quitan tiempo — y, cuando aplica, te ayudamos a financiarlo."
       code="TD"
       color="var(--color-secondary)"
-      intro="Como Agente Digital Autorizado gestionamos proyectos de digitalización financiables con Kit Digital y Kit Consulting, desde la automatización de tareas repetitivas hasta la implantación de Odoo ERP como núcleo del negocio."
+      intro="Diseñamos e implantamos proyectos de digitalización a medida, desde la automatización de tareas repetitivas hasta la implantación de Odoo ERP como núcleo del negocio. Como Agente Digitalizador Adherido y Asesor Digital, trabajamos también con los catálogos de Kit Digital y Kit Consulting."
       features={[
         {
           title: "Automatización de procesos",
@@ -27,7 +31,7 @@ export default function TransformacionDigitalPage() {
         },
         {
           title: "Kit Digital y Kit Consulting",
-          body: "Gestionamos la financiación pública de tu proyecto de digitalización como Agente Digital Autorizado.",
+          body: "Somos Agente Digitalizador Adherido y Asesor Digital: implantamos sus soluciones y te avisamos cuando se abran nuevas convocatorias de ayudas.",
         },
         {
           title: "Odoo ERP",
@@ -35,7 +39,7 @@ export default function TransformacionDigitalPage() {
         },
       ]}
       ctaTitle="¿Quieres saber qué se puede digitalizar en tu empresa?"
-      ctaBody="Revisamos tu situación actual y qué financiación pública puedes aprovechar."
+      ctaBody="Revisamos tu situación actual y te proponemos por dónde empezar."
       ctaLabel="Solicitar diagnóstico"
     />
   );

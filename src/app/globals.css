@@ -3,7 +3,7 @@
 :root {
   --color-ink: #0b1220;
   --color-ink-soft: #57667e;
-  --color-ink-faint: #8c98ad;
+  --color-ink-faint: #6a768b;
 
   --color-surface: #ffffff;
   --color-surface-alt: #f2f5fb;
@@ -17,6 +17,8 @@
   --color-secondary: #1b2a6b;
 
   --color-accent: #10b981;
+  /* Verde oscuro para texto y botones sobre fondo claro (contraste AA con blanco). */
+  --color-accent-strong: #047857;
   --color-accent-pale: #e1faf0;
 
   --color-line: #e1e7f2;
@@ -48,6 +50,7 @@
   --color-secondary: var(--color-secondary);
 
   --color-accent: var(--color-accent);
+  --color-accent-strong: var(--color-accent-strong);
   --color-accent-pale: var(--color-accent-pale);
 
   --color-line: var(--color-line);
@@ -186,7 +189,26 @@ h3,
   z-index: 60;
 }
 
+/* Entrada de las cabeceras con CSS: visible aunque no cargue JavaScript. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-in {
+  animation: hero-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-in,
   .blob-drift,
   .blob-drift-slow,
   .gradient-pan {

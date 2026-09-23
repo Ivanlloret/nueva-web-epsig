@@ -7,6 +7,7 @@ import ScrollProgress from "@/components/scroll-progress";
 import CookieBanner from "@/components/cookie-banner";
 import GoogleAnalytics from "@/components/google-analytics";
 import StructuredData from "@/components/structured-data";
+import MotionProvider from "@/components/motion-provider";
 import { site } from "@/lib/site";
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,7 +31,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.legalName} — ${site.tagline}`,
+    default: `${site.name} — Partner Odoo y consultoría para pymes en Gata de Gorgos y Valencia`,
     template: `%s — ${site.name}`,
   },
   description: site.description,
@@ -38,10 +39,11 @@ export const metadata: Metadata = {
   verification: process.env.GOOGLE_SITE_VERIFICATION
     ? { google: process.env.GOOGLE_SITE_VERIFICATION }
     : undefined,
+  // "./" = la URL de cada página (con la barra final que añade trailingSlash).
+  alternates: { canonical: "./" },
+  // Sin title/description aquí: cada página usa los suyos también en redes sociales.
   openGraph: {
-    title: site.legalName,
-    description: site.description,
-    url: site.url,
+    url: "./",
     siteName: site.name,
     locale: "es_ES",
     type: "website",
@@ -55,11 +57,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-surface text-ink">
-        <ScrollProgress />
-        <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <CookieBanner />
+        {/* Sin JavaScript, el contenido animado se muestra directamente. */}
+        <noscript>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
+        <a
+          href="#contenido"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white"
+        >
+          Saltar al contenido
+        </a>
+        <MotionProvider>
+          <ScrollProgress />
+          <Nav />
+          <main id="contenido" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <CookieBanner />
+        </MotionProvider>
         <GoogleAnalytics />
         <StructuredData />
       </body>

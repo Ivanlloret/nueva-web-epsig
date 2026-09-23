@@ -11,7 +11,7 @@ export default function OdooSpotlight() {
           <SectionHeading
             eyebrow="Servicio estrella"
             title="Odoo ERP, implantado por quien entiende de empresa"
-            body="Diagnóstico, configuración, migración de datos, formación del equipo y soporte continuo. No vendemos licencias: acompañamos la implantación de principio a fin."
+            body="Diagnóstico, configuración, migración de datos, formación del equipo y soporte continuo. No nos limitamos a venderte licencias: acompañamos la implantación de principio a fin."
             dark
           />
         </Reveal>
@@ -35,8 +35,8 @@ export default function OdooSpotlight() {
 
         <div className="mt-9.5 text-center">
           <Link
-            href="/servicios/odoo"
-            className="rounded-full bg-accent px-6.5 py-3.5 text-[14.5px] font-semibold text-white transition-opacity hover:opacity-90"
+            href="/contacto#diagnostico"
+            className="inline-block rounded-full bg-accent-strong px-6.5 py-3.5 text-[14.5px] font-semibold text-white transition-transform hover:scale-[1.04] active:scale-[0.96]"
           >
             Habla con un consultor Odoo
           </Link>

@@ -1,13 +1,15 @@
-import Reveal from "@/components/reveal";
+import Breadcrumbs, { type Crumb } from "@/components/breadcrumbs";
 
 export default function PageHero({
   eyebrow,
   title,
   lead,
+  breadcrumbs,
 }: {
   eyebrow: string;
   title: string;
   lead?: string;
+  breadcrumbs?: Crumb[];
 }) {
   return (
     <header className="relative overflow-hidden bg-surface-dark pt-20 pb-16 text-white sm:pt-24 sm:pb-20">
@@ -27,7 +29,8 @@ export default function PageHero({
         style={{ background: "radial-gradient(circle, rgba(34,73,199,.45), transparent 70%)" }}
         aria-hidden
       />
-      <Reveal className="relative mx-auto max-w-3xl px-6 text-center">
+      <div className="hero-in relative mx-auto max-w-3xl px-6 text-center">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
         <div className="inline-flex items-center gap-2 text-[11.5px] font-bold uppercase tracking-[0.12em] text-mist-accent">
           <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
           {eyebrow}
@@ -38,7 +41,7 @@ export default function PageHero({
             {lead}
           </p>
         )}
-      </Reveal>
+      </div>
     </header>
   );
 }

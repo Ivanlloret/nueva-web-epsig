@@ -29,7 +29,7 @@ export default function Pillars() {
                 </div>
                 <h3 className="mb-2.5 text-xl">{pillar.title}</h3>
                 <p className="text-[14.5px] leading-relaxed text-ink-soft">{pillar.summary}</p>
-                <span className="mt-4 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="mt-4 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100">
                   Saber más →
                 </span>
               </TiltCard>

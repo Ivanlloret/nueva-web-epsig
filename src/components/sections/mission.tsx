@@ -8,7 +8,7 @@ export default function Mission() {
           Ayudamos a las empresas a{" "}
           <span className="text-primary">mejorar su gestión</span>,{" "}
           <span className="text-primary">digitalizar sus procesos</span> y{" "}
-          <span className="text-accent">proteger su negocio</span>.
+          <span className="text-accent-strong">proteger su negocio</span>.
         </p>
         <small className="mt-5.5 block font-mono text-[13px] tracking-wide text-ink-soft">
           ESTE ES EL PORQUÉ DETRÁS DE CADA SERVICIO DE EPSIG

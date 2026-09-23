@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { primaryNav, site } from "@/lib/site";
 import logo from "@/assets/logo-epsig.png";
@@ -11,6 +11,32 @@ import logo from "@/assets/logo-epsig.png";
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // Cerrar el menú móvil al cambiar de página (también con el botón Atrás).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
+
+  // Con el menú móvil abierto: Escape lo cierra y la página de fondo no se desplaza.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
@@ -34,21 +60,22 @@ export default function Nav() {
                   rel="noopener noreferrer"
                   className="rounded-full px-3.5 py-2 font-medium text-ink-soft transition-colors hover:bg-surface-alt hover:text-ink"
                 >
-                  {item.label}
+                  {item.label} <span aria-hidden>↗</span>
+                  <span className="sr-only"> (se abre en una pestaña nueva)</span>
                 </a>
               ) : (
                 <Link
                   href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
                   className={`relative rounded-full px-3.5 py-2 font-medium transition-colors hover:bg-surface-alt hover:text-ink ${
                     item.highlight || isActive(item.href) ? "font-semibold text-primary" : "text-ink-soft"
                   }`}
                 >
                   {item.label}
                   {isActive(item.href) && (
-                    <motion.span
-                      layoutId="nav-active-dot"
+                    <span
+                      aria-hidden
                       className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
                 </Link>
@@ -56,7 +83,7 @@ export default function Nav() {
 
               {item.children && (
                 <div
-                  className={`invisible absolute left-0 top-full z-50 max-h-[70vh] overflow-y-auto rounded-2xl border border-line bg-surface p-2 opacity-0 shadow-[0_22px_40px_-20px_rgba(11,18,32,.25)] transition-all group-hover:visible group-hover:opacity-100 ${
+                  className={`invisible absolute left-0 top-full z-50 max-h-[70vh] overflow-y-auto rounded-2xl border border-line bg-surface p-2 opacity-0 shadow-[0_22px_40px_-20px_rgba(11,18,32,.25)] transition-all group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 ${
                     item.children.length > 5 ? "grid w-[560px] grid-cols-2 gap-1" : "w-72"
                   }`}
                 >
@@ -85,18 +112,18 @@ export default function Nav() {
           >
             Contacto
           </Link>
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-            <Link
-              href="/contacto#diagnostico"
-              className="rounded-full bg-ink px-5.5 py-3 text-[13.5px] font-semibold text-white shadow-[0_10px_24px_-10px_rgba(34,73,199,.6)] transition-colors hover:bg-primary"
-            >
-              Diagnóstico gratuito
-            </Link>
-          </motion.div>
+          <Link
+            href="/contacto#diagnostico"
+            className="inline-block rounded-full bg-ink px-5.5 py-3 text-[13.5px] font-semibold text-white shadow-[0_10px_24px_-10px_rgba(34,73,199,.6)] transition hover:scale-[1.04] hover:bg-primary active:scale-[0.97]"
+          >
+            Diagnóstico gratuito
+          </Link>
         </div>
 
         <button
+          ref={toggleRef}
           type="button"
+          aria-controls="menu-movil"
           className="flex h-10 w-10 items-center justify-center rounded-full border border-line lg:hidden"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
@@ -123,6 +150,7 @@ export default function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            id="menu-movil"
             className="overflow-hidden border-t border-line bg-surface lg:hidden"
           >
             <div className="max-h-[calc(100vh-64px)] overflow-y-auto px-6 py-4">
@@ -137,12 +165,14 @@ export default function Nav() {
                         onClick={() => setOpen(false)}
                         className="block rounded-lg px-3 py-2.5 font-medium text-ink-soft"
                       >
-                        {item.label}
+                        {item.label} <span aria-hidden>↗</span>
+                        <span className="sr-only"> (se abre en una pestaña nueva)</span>
                       </a>
                     ) : (
                       <Link
                         href={item.href}
                         onClick={() => setOpen(false)}
+                        aria-current={isActive(item.href) ? "page" : undefined}
                         className={`block rounded-lg px-3 py-2.5 font-medium ${
                           item.highlight || isActive(item.href) ? "text-primary" : "text-ink-soft"
                         }`}

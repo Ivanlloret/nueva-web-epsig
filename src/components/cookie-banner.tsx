@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   allChoices,
   consentCategories,
@@ -16,22 +16,36 @@ export default function CookieBanner() {
   const consent = useConsent();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [draft, setDraft] = useState<ConsentChoices>(() => allChoices(false));
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
 
   useEffect(
     () =>
       onOpenCookieSettings(() => {
+        openerRef.current = document.activeElement as HTMLElement | null;
         setDraft(consent ? pickChoices(consent) : allChoices(false));
         setSettingsOpen(true);
       }),
     [consent],
   );
 
+  // Al abrir la configuración, el foco pasa al panel para que teclado y lectores de pantalla lo encuentren.
+  useEffect(() => {
+    if (settingsOpen) titleRef.current?.focus();
+  }, [settingsOpen]);
+
   // En servidor (undefined) no se pinta nada, para no provocar desajustes de hidratación.
   const visible = consent === null || settingsOpen;
 
+  function closeSettings() {
+    setSettingsOpen(false);
+    openerRef.current?.focus();
+    openerRef.current = null;
+  }
+
   function decide(choices: ConsentChoices) {
     saveConsent(choices);
-    setSettingsOpen(false);
+    closeSettings();
   }
 
   return (
@@ -41,13 +55,22 @@ export default function CookieBanner() {
           role="dialog"
           aria-modal="false"
           aria-labelledby="cookie-banner-title"
+          onKeyDown={(event) => {
+            // Escape cierra la configuración si ya había una elección guardada.
+            if (event.key === "Escape" && settingsOpen && consent) closeSettings();
+          }}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-2xl rounded-panel border border-line bg-surface p-5 shadow-[0_24px_60px_-20px_rgba(11,18,32,.35)] sm:p-6"
         >
-          <h2 id="cookie-banner-title" className="mb-2 font-display text-base font-semibold text-ink">
+          <h2
+            id="cookie-banner-title"
+            ref={titleRef}
+            tabIndex={-1}
+            className="mb-2 font-display text-base font-semibold text-ink outline-none"
+          >
             {settingsOpen ? "Configurar cookies" : "Usamos cookies"}
           </h2>
           <p className="text-[13.5px] leading-relaxed text-ink-soft">
@@ -147,7 +170,7 @@ function CategoryRow({
         />
         <span
           aria-hidden
-          className="relative mt-0.5 h-6 w-10 shrink-0 rounded-full bg-ink-faint transition-colors peer-checked:bg-accent peer-disabled:opacity-60 peer-focus-visible:ring-2 peer-focus-visible:ring-primary after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"
+          className="relative mt-0.5 h-6 w-10 shrink-0 rounded-full bg-chip-muted transition-colors peer-checked:bg-accent-strong peer-disabled:opacity-60 peer-focus-visible:ring-2 peer-focus-visible:ring-primary after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4"
         />
       </label>
     </li>

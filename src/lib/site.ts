@@ -1,6 +1,12 @@
+// Teléfonos de contacto: el primero es el principal.
+const phoneContacts = [
+  { number: "690 64 29 17", label: "Principal" },
+  { number: "628 70 92 57", label: "Secundario" },
+] as const;
+
 export const site = {
   name: "EPSIG Consultores",
-  legalName: "EPSIG CONSULTORES SL",
+  legalName: "EPSIG CONSULTORES SLU",
   legalForm: "Sociedad de Responsabilidad Limitada (unipersonal)",
   nif: "B98839400",
   registeredAddress: "Calle Doctor Moratal 1, 4.º dcha., 03740 Gata de Gorgos (Alicante)",
@@ -9,17 +15,18 @@ export const site = {
   foundedYear: 2017,
   tagline: "El sistema que ayuda a tu empresa a funcionar mejor.",
   description:
-    "Partner oficial Odoo y Agente Digital Autorizado. Implantamos Odoo ERP y acompañamos a pymes de la Marina Alta, Valencia y La Safor a gestionar, digitalizar y proteger su negocio.",
+    "Partner oficial de Odoo, Agente Digitalizador Adherido y Asesor Digital. Implantamos Odoo ERP y acompañamos a pymes de la Marina Alta, Valencia y la Safor a gestionar, digitalizar y proteger su negocio.",
   url: "https://epsigconsultores.com",
   email: "info@epsigconsultores.com",
-  phones: ["623 047 948", "690 64 29 17", "628 709 257"],
-  footerTagline: "Epsig Consultores, te ayudamos a empoderar tu empresa.",
+  phones: phoneContacts.map((phone) => phone.number),
+  phoneContacts,
+  footerTagline: "EPSIG Consultores, te ayudamos a empoderar tu empresa.",
   clientPortalUrl: "https://epsig.matrixconnect.eu/apps/login/",
   offices: [
     {
       name: "Gata de Gorgos",
-      address: "Calle Doctor Moratal 1",
-      locality: "Gata de Gorgos (Alicante)",
+      address: "Calle Doctor Moratal 1, 4.º dcha.",
+      locality: "03740 Gata de Gorgos (Alicante)",
       // Datos para Google (JSON-LD), tomados de la ficha de Google Business Profile.
       streetAddress: "Calle Doctor Moratal 1, 4.º dcha.",
       postalCode: "03740",
@@ -34,8 +41,8 @@ export const site = {
     },
     {
       name: "Valencia",
-      address: "Avenida Blasco Ibáñez 153",
-      locality: "Valencia (Valencia)",
+      address: "Avenida Blasco Ibáñez 153, 8.º, pta. 40",
+      locality: "46022 Valencia",
       streetAddress: "Avenida Blasco Ibáñez 153, 8.º, pta. 40",
       postalCode: "46022",
       city: "València",
@@ -55,11 +62,18 @@ export const site = {
     instagram: "https://www.instagram.com/epsig_consultores/",
   },
   badges: [
-    "Partner Odoo",
-    "Agente Digital Autorizado — Kit Digital / Kit Consulting",
-    "Partner ESET",
-    "Partner Ágora",
+    "Partner oficial de Odoo",
+    "Partner de ESET",
+    "Agente Digitalizador Adherido (Kit Digital)",
+    "Asesor Digital (Kit Consulting)",
   ],
+} as const;
+
+// Estado de las convocatorias. Cuando se abra una nueva, cambia el valor a true
+// y desaparece el aviso de "convocatoria cerrada" en todas las páginas.
+export const programStatus = {
+  kitDigital: false, // Última convocatoria cerrada el 31/10/2025
+  kitConsulting: false, // Convocatoria cerrada el 31/03/2025
 } as const;
 
 export const pillars = [
@@ -77,7 +91,7 @@ export const pillars = [
     color: "var(--color-secondary)",
     title: "Transformación Digital",
     summary:
-      "Automatización, IA y digitalización de procesos — financiable con Kit Digital y Kit Consulting.",
+      "Automatización, IA y digitalización de procesos, con los servicios de los catálogos Kit Digital y Kit Consulting.",
   },
   {
     slug: "proteccion-del-negocio",
@@ -122,7 +136,7 @@ export const sectors = [
   {
     id: "hosteleria",
     title: "Hostelería",
-    body: "TPV, cartas digitales y comanderos — conectable a tu Odoo.",
+    body: "TPV, cartas digitales y comanderos — conectables a tu Odoo.",
     highlight: true,
   },
 ] as const;
@@ -131,22 +145,31 @@ export const sectors = [
 export const asesoriaAreas = [
   {
     slug: "economico-financiero",
-    title: "Económico – Financiero",
-    body: "Analizamos tu situación económica, de forma imparcial, para asesorarte en tu beneficio y no en el de terceros (bancos, aseguradoras). Para particulares: protección familiar, ahorro e inversión, jubilación. Para empresas: financiación, tesorería, cobros y pagos. Somos Punto de Atención al Emprendedor (PAE) y podemos darte de alta como autónomo o constituir tu sociedad en 48 horas.",
+    title: "Económico-financiero",
+    pageTitle: "Asesoría económico-financiera",
+    description:
+      "Asesoría económico-financiera imparcial para empresas, autónomos y particulares: financiación, tesorería, planificación y alta de autónomos o sociedades.",
+    body: "Analizamos la situación económica de tu empresa de forma imparcial, para asesorarte en tu beneficio y no en el de terceros: financiación, tesorería, cobros y pagos. Somos Punto de Atención al Emprendedor (PAE) y podemos darte de alta como autónomo o constituir tu sociedad en 48 horas.",
   },
   {
     slug: "laboral",
     title: "Laboral",
+    pageTitle: "Asesoría laboral",
+    description:
+      "Asesoría laboral y de Recursos Humanos para empresas y autónomos: nóminas, contratos, Seguridad Social y externalización de la administración de personal.",
     body: "Asesoramiento laboral y de Recursos Humanos para empresas y autónomos — desde consultas puntuales hasta la externalización completa de la administración de personal: nóminas, contratos, altas y bajas en la Seguridad Social.",
   },
   {
     slug: "fiscal-contable",
-    title: "Fiscal – Contable",
+    title: "Fiscal-contable",
+    pageTitle: "Asesoría fiscal-contable",
+    description:
+      "Asesoría fiscal y contable para empresas y particulares, con gestión contable rigurosa y acceso permanente al estado de tu empresa.",
     body: "Asesoramiento y gestión fiscal de empresas y particulares, apoyada en una gestión contable rigurosa. Trabajamos con el software adecuado para cada caso y te damos acceso permanente al estado de tu empresa.",
   },
   {
     title: "Protección de datos (RGPD)",
-    body: "Adecuación normativa a la protección de datos integrada en el resto de la asesoría — no compras RGPD, compras tranquilidad normativa.",
+    body: "Adecuación de tu empresa al Reglamento General de Protección de Datos, integrada en el resto de la asesoría para que el cumplimiento no sea un trámite aparte.",
   },
 ] as const;
 
@@ -161,13 +184,13 @@ export const kitConsultingServices = [
     slug: "asesoramiento_ia",
     title: "Asesoramiento en Inteligencia Artificial",
     summary: "Diagnóstico inicial y estrategia de IA para tu empresa.",
-    body: "Como Asesores Digitales Autorizados, gestionamos la solicitud de tu bono y desarrollamos un plan completo de inteligencia artificial: diagnóstico inicial, diseño de estrategia, capacitación de tu equipo y análisis predictivo, para impulsar la transformación digital de tu empresa.",
+    body: "Como Asesores Digitales, desarrollamos un plan completo de inteligencia artificial: diagnóstico inicial, diseño de estrategia, capacitación de tu equipo y análisis predictivo, para impulsar la transformación digital de tu empresa.",
   },
   {
     slug: "asesoramiento_analisisdedatos_ia",
     title: "Asesoramiento en Análisis de Datos (Básico)",
     summary: "Diagnóstico y herramientas de IA para tus datos.",
-    body: "Te acompañamos en la solicitud y desarrollo del plan de análisis de datos, con un diagnóstico inicial, políticas de calidad de datos y selección de herramientas de IA para optimizar tu análisis y visualización. Capacitamos a tu equipo en el uso estratégico de estas tecnologías y documentamos el proceso para cumplir los requisitos de la subvención.",
+    body: "Te acompañamos en el desarrollo del plan de análisis de datos, con un diagnóstico inicial, políticas de calidad de datos y selección de herramientas de IA para optimizar tu análisis y visualización. Capacitamos a tu equipo en el uso estratégico de estas tecnologías y documentamos todo el proceso.",
   },
   {
     slug: "asesoramiento_analisisdedatos_ia_avanzado",
@@ -197,7 +220,7 @@ export const kitConsultingServices = [
     slug: "ciberseguridad_avanzado",
     title: "Asesoramiento en Ciberseguridad (Avanzado)",
     summary: "Sistemas avanzados de protección y cultura de seguridad.",
-    body: "Con este bono puedes elevar la seguridad de tu pyme más allá de lo básico, explorando sistemas avanzados de protección. Realizamos análisis de vulnerabilidades, implementamos herramientas de ciberseguridad y creamos un entorno de protección proactiva, promoviendo una cultura de seguridad entre tus empleados.",
+    body: "Con este servicio puedes elevar la seguridad de tu pyme más allá de lo básico, explorando sistemas avanzados de protección. Realizamos análisis de vulnerabilidades, implementamos herramientas de ciberseguridad y creamos un entorno de protección proactiva, promoviendo una cultura de seguridad entre tus empleados.",
   },
   {
     slug: "360_transformaciondigital",
@@ -212,7 +235,7 @@ export const kitDigitalCategories = [
     slug: "software",
     title: "Gestión de procesos",
     summary: "Software administrativo, CRM y conexión con tu web.",
-    body: "La implementación de un software de gestión administrativo en tu empresa reduce el tiempo que dedicas a la facturación y te permite mejorar tu negocio: a partir de ahí puedes sumar un CRM para la captación y el crecimiento de clientes, conectar tu página web para vender por ese canal y añadir análisis de datos (Business Intelligence).",
+    body: "La implementación de un software de gestión administrativa en tu empresa reduce el tiempo que dedicas a la facturación y te permite mejorar tu negocio: a partir de ahí puedes sumar un CRM para la captación y el crecimiento de clientes, conectar tu página web para vender por ese canal y añadir análisis de datos (Business Intelligence).",
     features: [
       "Implementación de software administrativo (Odoo u otras herramientas homologadas) en tu empresa.",
       "Conexión con tu página web y con herramientas de análisis de datos.",
@@ -227,7 +250,7 @@ export const kitDigitalCategories = [
     features: [
       "Google Workspace: aplicaciones web con dominio personalizado.",
       "Microsoft 365: seguridad y productividad basadas en la nube.",
-      "Freeware: correo y dominio personalizado a medida.",
+      "Freeware: correo y dominio personalizados a medida.",
     ],
     priceFrom: "Desde 10 €/usuario al mes",
   },
@@ -235,7 +258,7 @@ export const kitDigitalCategories = [
     slug: "sitioweb",
     title: "Sitio web y presencia básica en Internet",
     summary: "Web adaptada a ordenador, móvil y tablet.",
-    body: "Creamos una página web a medida de las necesidades de tu empresa utilizando frameworks como WordPress o Prestashop. Las páginas se adaptan a ordenador, móvil y tablet.",
+    body: "Creamos una página web a medida de las necesidades de tu empresa utilizando plataformas como WordPress o PrestaShop. Las páginas se adaptan a ordenador, móvil y tablet.",
     features: [
       "Creación de sitio web para tu empresa.",
       "Integración de e-commerce si lo necesitas.",
@@ -246,7 +269,7 @@ export const kitDigitalCategories = [
     slug: "tienda-online",
     title: "Comercio electrónico",
     summary: "Tienda online conectada a tu gestión.",
-    body: "Ampliamos tu negocio mediante la implementación de una tienda online: alcanza a más clientes a través de plataformas como Prestashop, WooCommerce o Shopify, conectadas a tu software de gestión.",
+    body: "Ampliamos tu negocio mediante la implementación de una tienda online: alcanza a más clientes a través de plataformas como PrestaShop, WooCommerce o Shopify, conectadas a tu software de gestión.",
     features: [
       "Implementación de e-commerce en tu página web.",
       "Conexión de la tienda online a tu software empresarial.",
@@ -256,19 +279,19 @@ export const kitDigitalCategories = [
   {
     slug: "face",
     title: "Factura electrónica",
-    summary: "E-factura y subida automática a FACE.",
-    body: "Generación de e-facturas válidas para la plataforma FACE, con automatización de las tareas de subida a la plataforma para que no tengas que hacerlo a mano.",
+    summary: "E-factura y subida automática a FACe.",
+    body: "Generación de e-facturas válidas para la plataforma FACe, con automatización de las tareas de subida a la plataforma para que no tengas que hacerlo a mano.",
     features: [
-      "Generación de e-facturas válidas para FACE.",
+      "Generación de e-facturas válidas para FACe.",
       "Automatización de la subida a la plataforma.",
     ],
     priceFrom: "Desde 250 € al año",
   },
   {
     slug: "bi",
-    title: "Business Intelligence y Analítica",
+    title: "Business Intelligence y analítica",
     summary: "Analiza y comparte datos de toda tu organización.",
-    body: "Saca el máximo provecho a tus datos conectando todas tus fuentes de información, para analizar, compartir y promover el conocimiento en toda la organización manteniendo precisión y seguridad. Trabaja de forma conjunta con herramientas como Microsoft Teams y Excel para tomar decisiones controladas por datos.",
+    body: "Saca el máximo provecho de tus datos conectando todas tus fuentes de información, para analizar, compartir y promover el conocimiento en toda la organización manteniendo precisión y seguridad. Trabaja de forma conjunta con herramientas como Microsoft Teams y Excel para tomar decisiones basadas en datos.",
     features: [
       "Estrategias e implementación para mejorar el rendimiento de tu empresa.",
       "Herramientas de análisis para detectar información útil.",
@@ -315,7 +338,7 @@ export const kitDigitalCategories = [
   {
     slug: "ciberges",
     title: "Servicio de ciberseguridad gestionada",
-    summary: "Detección y respuesta 24x7 (EDR/MDR).",
+    summary: "Detección y respuesta 24/7 (EDR/MDR).",
     body: "Combina técnicas de EDR (Endpoint Detection and Response) y MDR (Managed Detection and Response) para detectar incidentes de ciberseguridad en tiempo real y responder de la forma más rápida y eficaz posible — la misma tecnología que usamos para nuestros propios servidores.",
     features: [
       "Detección y respuesta en endpoints, servidores y entornos cloud.",
@@ -323,9 +346,14 @@ export const kitDigitalCategories = [
       "Alertas inmediatas y búsqueda activa de amenazas.",
       "Informes mensuales de seguimiento y asistencia directa ante incidentes.",
     ],
-    priceFrom: "Desde 150 €/usuario",
+    priceFrom: "Desde 150 €/usuario al año",
   },
 ] as const;
+
+/** Enlace tel: con prefijo internacional y sin espacios. */
+export function telHref(phone: string) {
+  return `tel:+34${phone.replace(/\s/g, "")}`;
+}
 
 export type NavLink = {
   label: string;
@@ -363,7 +391,7 @@ export const primaryNav: NavLink[] = [
     label: "Kit Digital",
     href: "/kit-digital",
     children: [
-      { label: "Ver todas las categorías", href: "/kit-digital", description: "Resumen y precios" },
+      { label: "Ver todas las categorías", href: "/kit-digital", description: "Resumen y precios orientativos" },
       ...kitDigitalCategories.map((cat) => ({
         label: cat.title,
         href: `/kit-digital/${cat.slug}`,
@@ -375,7 +403,7 @@ export const primaryNav: NavLink[] = [
     label: "Kit Consulting",
     href: "/kit-consulting",
     children: [
-      { label: "Ver todos los bonos", href: "/kit-consulting", description: "Hasta 24.000 €" },
+      { label: "Ver todos los servicios", href: "/kit-consulting", description: "Asesoramiento digital" },
       ...kitConsultingServices.map((service) => ({
         label: service.title,
         href: `/kit-consulting/${service.slug}`,
@@ -386,13 +414,9 @@ export const primaryNav: NavLink[] = [
   {
     label: "Nosotros",
     href: "/nosotros",
-    children: [
-      { label: "Nosotros", href: "/nosotros" },
-      { label: "Precios", href: "/precios" },
-    ],
   },
   {
-    label: "Acceso a clientes ↗",
+    label: "Acceso a clientes",
     href: "https://epsig.matrixconnect.eu/apps/login/",
     external: true,
   },
@@ -400,19 +424,23 @@ export const primaryNav: NavLink[] = [
 
 export const footerNav = {
   servicios: [
-    { label: "Odoo ERP", href: "/servicios/odoo" },
+    { label: "Implantación de Odoo ERP", href: "/servicios/odoo" },
     { label: "Consultoría Empresarial", href: "/servicios/consultoria-empresarial" },
     { label: "Transformación Digital", href: "/servicios/transformacion-digital" },
-    { label: "Protección del Negocio", href: "/servicios/proteccion-del-negocio" },
+    { label: "Ciberseguridad y Protección del Negocio", href: "/servicios/proteccion-del-negocio" },
+  ],
+  asesoria: [
+    { label: "Asesoría económico-financiera", href: "/economico-financiero" },
+    { label: "Asesoría laboral", href: "/laboral" },
+    { label: "Asesoría fiscal-contable", href: "/fiscal-contable" },
   ],
   financiacion: [
     { label: "Kit Digital", href: "/kit-digital" },
     { label: "Kit Consulting", href: "/kit-consulting" },
-    { label: "Precios", href: "/precios" },
   ],
   empresa: [
     { label: "Nosotros", href: "/nosotros" },
     { label: "Contacto", href: "/contacto" },
-    { label: "Acceso a clientes ↗", href: "https://epsig.matrixconnect.eu/apps/login/" },
+    { label: "Acceso a clientes", href: "https://epsig.matrixconnect.eu/apps/login/" },
   ],
 };

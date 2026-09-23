@@ -59,7 +59,7 @@ export default function PoliticaDePrivacidadPage() {
           </p>
           <ul className="mt-3 list-disc pl-5">
             <li>Microsoft (Microsoft 365), para el correo electrónico.</li>
-            <li>El proveedor de alojamiento del sitio web.</li>
+            <li>IONOS, para el alojamiento del sitio web.</li>
             <li>Cloudflare, para la seguridad y la distribución del sitio web.</li>
           </ul>
           <p className="mt-3">

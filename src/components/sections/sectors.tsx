@@ -21,7 +21,7 @@ export default function Sectors() {
                     : "border-line bg-surface"
                 }`}
               >
-                <h4 className="mb-2 text-[16.5px]">{sector.title}</h4>
+                <h3 className="mb-2 text-[16.5px]">{sector.title}</h3>
                 <p className="text-[13px] leading-relaxed text-ink-soft">{sector.body}</p>
               </TiltCard>
             </Reveal>

@@ -17,6 +17,12 @@ const legacyRedirects: [source: string, destination: string][] = [
   ["/donacion-fallida", "/"],
   ["/escritorio-del-donante", "/"],
   ["/blog", "/"],
+  ["/precios", "/kit-digital/"],
+  // Páginas residuales de WordPress indexadas en Google.
+  ["/espresso", "/"],
+  ["/feed", "/"],
+  ["/comments/feed", "/"],
+  ["/category/:slug*", "/"],
 ];
 
 const isDev = process.env.NODE_ENV === "development";

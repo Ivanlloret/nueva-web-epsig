@@ -16,7 +16,6 @@ const routes = [
   "/kit-consulting",
   ...kitConsultingServices.map((service) => `/kit-consulting/${service.slug}`),
   "/nosotros",
-  "/precios",
   "/contacto",
   "/aviso-legal",
   "/politica-de-privacidad",
@@ -26,6 +25,5 @@ const routes = [
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
     url: `${site.url}${route}/`,
-    lastModified: new Date(),
   }));
 }

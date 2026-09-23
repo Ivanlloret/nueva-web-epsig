@@ -16,6 +16,7 @@ export default function ServiciosPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[{ label: "Servicios", href: "/servicios" }]}
         eyebrow="Servicios"
         title="Tres formas de ayudarte a funcionar mejor"
         lead="Consultoría, digitalización y protección — nunca por separado. Cada proyecto se diseña a partir de dónde está tu empresa hoy."
@@ -36,11 +37,11 @@ export default function ServiciosPage() {
                   >
                     {pillar.code}
                   </div>
-                  <h3 className="mb-2.5 text-xl">{pillar.title}</h3>
+                  <h2 className="mb-2.5 text-xl">{pillar.title}</h2>
                   <p className="text-[14.5px] leading-relaxed text-ink-soft">
                     {pillar.summary}
                   </p>
-                  <span className="mt-4 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="mt-4 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100">
                     Ver servicio →
                   </span>
                 </TiltCard>
@@ -55,7 +56,7 @@ export default function ServiciosPage() {
                   <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
                   Servicio estrella
                 </span>
-                <h3 className="mt-3 text-xl">Odoo ERP, implantado de principio a fin</h3>
+                <h2 className="mt-3 text-xl">Odoo ERP, implantado de principio a fin</h2>
                 <p className="mt-2 max-w-xl text-[14.5px] leading-relaxed text-ink-soft">
                   Diagnóstico, configuración, migración de datos, formación del equipo y
                   soporte continuo — el hilo conductor que conecta las otras tres áreas.
@@ -77,11 +78,16 @@ export default function ServiciosPage() {
           <div className="mx-auto mb-10 max-w-2xl text-center">
             <div className="inline-flex items-center gap-2 text-[11.5px] font-bold uppercase tracking-[0.12em] text-primary">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
-              Financiación pública
+              Programas públicos
             </div>
             <h2 className="mt-3 text-[28px]">
-              Como Agente Digital Autorizado, gestionamos tu subvención
+              Agente Digitalizador Adherido y Asesor Digital
             </h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
+              Implantamos las soluciones de los catálogos Kit Digital y Kit Consulting. Las
+              convocatorias están cerradas ahora mismo, pero puedes contratar estos servicios
+              directamente y te avisamos cuando se abran de nuevo.
+            </p>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <Reveal>
@@ -92,9 +98,9 @@ export default function ServiciosPage() {
                 <h3 className="mb-2 text-lg">Kit Digital</h3>
                 <p className="text-[14px] leading-relaxed text-ink-soft">
                   Web, comercio electrónico, CRM, ciberseguridad y más soluciones
-                  digitales subvencionadas para tu pyme.
+                  digitales para tu pyme.
                 </p>
-                <span className="mt-3 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="mt-3 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100">
                   Ver categorías →
                 </span>
               </TiltCard>
@@ -106,11 +112,11 @@ export default function ServiciosPage() {
               >
                 <h3 className="mb-2 text-lg">Kit Consulting</h3>
                 <p className="text-[14px] leading-relaxed text-ink-soft">
-                  Bono de asesoramiento digital de hasta 24.000 € para empresas de 10 a
-                  249 empleados.
+                  Asesoramiento en inteligencia artificial, datos, procesos, estrategia y
+                  ciberseguridad para empresas de 10 a 249 empleados.
                 </p>
-                <span className="mt-3 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
-                  Ver bono →
+                <span className="mt-3 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100">
+                  Ver servicios →
                 </span>
               </TiltCard>
             </Reveal>

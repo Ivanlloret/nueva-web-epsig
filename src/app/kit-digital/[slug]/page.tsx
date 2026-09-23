@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CatalogDetail from "@/components/catalog-detail";
-import { kitDigitalCategories } from "@/lib/site";
+import ProgramStatus from "@/components/program-status";
+import { kitDigitalCategories, programStatus, site } from "@/lib/site";
 
 export function generateStaticParams() {
   return kitDigitalCategories.map((cat) => ({ slug: cat.slug }));
@@ -14,8 +15,8 @@ export async function generateMetadata({
   const category = kitDigitalCategories.find((cat) => cat.slug === slug);
   if (!category) return {};
   return {
-    title: category.title,
-    description: category.summary,
+    title: `Kit Digital: ${category.title}`,
+    description: `${category.summary} ${category.priceFrom}. Solución del catálogo Kit Digital implantada por ${site.name}.`,
   };
 }
 
@@ -28,6 +29,10 @@ export default async function KitDigitalCategoryPage({
 
   return (
     <CatalogDetail
+      breadcrumbs={[
+        { label: "Kit Digital", href: "/kit-digital" },
+        { label: category.title, href: `/kit-digital/${category.slug}` },
+      ]}
       eyebrow="Kit Digital"
       title={category.title}
       lead={category.summary}
@@ -36,9 +41,10 @@ export default async function KitDigitalCategoryPage({
       price={category.priceFrom}
       backHref="/kit-digital"
       backLabel="Ver todas las categorías de Kit Digital"
-      ctaTitle="¿Quieres esta solución dentro de tu Kit Digital?"
-      ctaBody="Comprobamos tu segmento y gestionamos toda la solicitud, de principio a fin."
-      ctaLabel="Consultar mi Kit Digital"
+      notice={<ProgramStatus program="Kit Digital" open={programStatus.kitDigital} compact />}
+      ctaTitle="¿Te interesa esta solución?"
+      ctaBody="Te asesoramos sin compromiso y te avisamos en cuanto haya una nueva convocatoria de ayudas."
+      ctaLabel="Solicitar información"
     />
   );
 }

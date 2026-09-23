@@ -10,13 +10,14 @@ import { pillars, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Nosotros",
   description:
-    "EPSIG Consultores: consultoría empresarial, transformación digital e implantación de Odoo ERP para pymes de la Marina Alta, Valencia y La Safor.",
+    "EPSIG Consultores: consultoría empresarial, transformación digital e implantación de Odoo ERP para pymes de la Marina Alta, Valencia y la Safor.",
 };
 
 export default function NosotrosPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[{ label: "Nosotros", href: "/nosotros" }]}
         eyebrow="Nosotros"
         title="Ayudamos a las empresas a funcionar mejor"
         lead="Mejorar su gestión, digitalizar sus procesos y proteger su negocio — ese es el porqué detrás de cada servicio de EPSIG."
@@ -32,7 +33,7 @@ export default function NosotrosPage() {
             </Reveal>
             <Reveal className="text-center text-[15px] leading-relaxed text-ink-soft sm:text-left">
               <p>
-                EPSIG Consultores se constituyó en {site.foundedYear} con la intención de
+                EPSIG Consultores inició su actividad en {site.foundedYear} con la intención de
                 prestar un servicio integral de consultoría a empresas, especialmente en
                 digitalización. No nos limitamos a sugerir soluciones: nos implicamos
                 en su desarrollo hasta cumplir el objetivo.
@@ -43,7 +44,7 @@ export default function NosotrosPage() {
           <SectionHeading
             eyebrow="Cómo trabajamos"
             title="Consultoría, digitalización y protección, en un solo equipo"
-            body="La mayoría de pymes acaban con un gestor para la contabilidad, un informático para el ERP y una empresa distinta para la ciberseguridad — y ninguno habla con el otro. Nosotros unimos las tres cosas."
+            body="La mayoría de pymes acaban con un gestor para la contabilidad, un informático para el ERP y una empresa distinta para la ciberseguridad — y ninguno habla con los demás. Nosotros unimos las tres cosas."
           />
           <div className="grid grid-cols-1 gap-5.5 sm:grid-cols-3">
             {pillars.map((pillar, index) => (

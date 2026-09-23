@@ -45,6 +45,7 @@ export default function Reveal({
 
   return (
     <motion.div
+      data-reveal=""
       className={className}
       style={style}
       initial="hidden"

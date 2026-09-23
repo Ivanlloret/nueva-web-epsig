@@ -4,35 +4,43 @@ import Reveal from "@/components/reveal";
 import SectionHeading from "@/components/section-heading";
 import TiltCard from "@/components/tilt-card";
 import CtaBand from "@/components/sections/cta-band";
-import { kitConsultingServices, kitConsultingTiers } from "@/lib/site";
+import ProgramStatus from "@/components/program-status";
+import { kitConsultingServices, kitConsultingTiers, programStatus } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Kit Consulting",
   description:
-    "Bono de Asesoramiento Digital de hasta 24.000€ financiado por Next Generation EU. Gestionamos tu Kit Consulting como Agente Digital Autorizado.",
+    "Servicios de asesoramiento del programa Kit Consulting: inteligencia artificial, análisis de datos, procesos, estrategia, ciberseguridad y transformación digital, con EPSIG como Asesor Digital.",
 };
 
 export default function KitConsultingPage() {
   return (
     <>
       <PageHero
-        eyebrow="Financiación pública · Agente Digital Autorizado"
-        title="Kit Consulting: hasta 24.000 € para digitalizar tu empresa"
-        lead="Un Bono de Asesoramiento Digital del Gobierno de España, financiado con fondos Next Generation EU, para empresas de entre 10 y 249 empleados."
+        breadcrumbs={[{ label: "Kit Consulting", href: "/kit-consulting" }]}
+        eyebrow="Asesor Digital"
+        title="Kit Consulting: asesoramiento experto para digitalizar tu empresa"
+        lead="Un programa del Gobierno de España, financiado por la Unión Europea – NextGenerationEU, que subvenciona servicios de asesoramiento digital para empresas de entre 10 y 249 empleados."
       />
 
       <section className="py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-6">
-          <Reveal className="mx-auto mb-16 max-w-2xl text-center text-[15px] leading-relaxed text-ink-soft">
+          <div className="mb-14">
+            <ProgramStatus program="Kit Consulting" open={programStatus.kitConsulting} />
+          </div>
+
+          <Reveal className="mx-auto mb-12 max-w-2xl text-center text-[15px] leading-relaxed text-ink-soft">
             <p>
               El programa Kit Consulting, dentro del Plan de Recuperación, Transformación y
-              Resiliencia, financia la contratación de servicios de asesoramiento
-              especializados en transformación digital, ventas online, mejora de procesos,
-              inteligencia artificial y rendimiento empresarial. Como Agente Digital
-              Autorizado, gestionamos tu solicitud de principio a fin.
+              Resiliencia, subvenciona servicios de asesoramiento en inteligencia artificial,
+              análisis de datos, procesos de negocio, estrategia, ciberseguridad y
+              transformación digital. Como Asesor Digital, prestamos todos estos servicios.
             </p>
           </Reveal>
 
+          <p className="mb-5 text-center text-sm font-semibold text-ink">
+            Importe del bono según el tamaño de la empresa
+          </p>
           <div className="mx-auto mb-20 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
             {kitConsultingTiers.map((tier, index) => (
               <Reveal key={tier.range} delay={index * 0.08}>
@@ -47,8 +55,9 @@ export default function KitConsultingPage() {
           </div>
 
           <SectionHeading
-            eyebrow="Bono de asesoramiento"
-            title="¿En qué servicios puedes usar tu bono?"
+            eyebrow="Servicios de asesoramiento"
+            title="Servicios del catálogo Kit Consulting"
+            body="Puedes contratarlos directamente con nosotros, con o sin ayuda pública."
             align="left"
           />
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -62,7 +71,7 @@ export default function KitConsultingPage() {
                   <p className="flex-1 text-[14px] leading-relaxed text-ink-soft">
                     {service.summary}
                   </p>
-                  <span className="mt-3 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="mt-3 inline-block text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100">
                     Ver más →
                   </span>
                 </TiltCard>
@@ -73,9 +82,9 @@ export default function KitConsultingPage() {
       </section>
 
       <CtaBand
-        title="¿Quieres saber si tu empresa puede acceder al Kit Consulting?"
-        body="Comprobamos tu elegibilidad y gestionamos toda la solicitud del bono."
-        ctaLabel="Consultar mi bono"
+        title="¿Quieres digitalizar tu empresa con un plan claro?"
+        body="Te asesoramos sin compromiso y te avisamos en cuanto haya una nueva convocatoria de ayudas."
+        ctaLabel="Solicitar información"
       />
     </>
   );

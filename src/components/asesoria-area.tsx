@@ -2,23 +2,29 @@ import type { Metadata } from "next";
 import CatalogDetail from "@/components/catalog-detail";
 import { asesoriaAreas } from "@/lib/site";
 
-type AreaSlug = Extract<(typeof asesoriaAreas)[number], { slug: string }>["slug"];
+type AreaWithPage = Extract<(typeof asesoriaAreas)[number], { slug: string }>;
+type AreaSlug = AreaWithPage["slug"];
 
 function getArea(slug: AreaSlug) {
-  return asesoriaAreas.find((area) => "slug" in area && area.slug === slug)!;
+  return asesoriaAreas.find((area): area is AreaWithPage => "slug" in area && area.slug === slug)!;
 }
 
 export function asesoriaAreaMetadata(slug: AreaSlug): Metadata {
   const area = getArea(slug);
-  return { title: `Asesoría ${area.title}`, description: area.body.slice(0, 155) };
+  return { title: area.pageTitle, description: area.description };
 }
 
 export default function AsesoriaArea({ slug }: { slug: AreaSlug }) {
   const area = getArea(slug);
   return (
     <CatalogDetail
+      breadcrumbs={[
+        { label: "Servicios", href: "/servicios" },
+        { label: "Consultoría Empresarial", href: "/servicios/consultoria-empresarial" },
+        { label: area.pageTitle, href: `/${area.slug}` },
+      ]}
       eyebrow="Consultoría Empresarial"
-      title={`Asesoría ${area.title}`}
+      title={area.pageTitle}
       body={area.body}
       backHref="/servicios/consultoria-empresarial"
       backLabel="Ver toda la Consultoría Empresarial"

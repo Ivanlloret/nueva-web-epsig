@@ -58,8 +58,8 @@ export default function AvisoLegalPage() {
 
           <h2 className="mt-8 mb-3 text-xl text-ink">3. Condiciones de uso</h2>
           <p>
-            El acceso y uso de este sitio web atribuye la condición de usuario y acepta,
-            desde dicho acceso, las condiciones de uso aquí reflejadas. Los contenidos se
+            El acceso y uso de este sitio web atribuye la condición de usuario e implica la
+            aceptación, desde dicho acceso, de las condiciones de uso aquí reflejadas. Los contenidos se
             proporcionan a título informativo, sin que su uso genere ninguna relación
             comercial u obligación entre el usuario y {site.legalName}.
           </p>
