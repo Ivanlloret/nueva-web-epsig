@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import CookieSettingsButton from "@/components/cookie-settings-button";
 import logoWhite from "@/assets/logo-epsig-white.png";
 import { footerNav, site } from "@/lib/site";
 
@@ -80,6 +81,7 @@ export default function Footer() {
             <Link href="/politica-de-privacidad" className="hover:text-white">
               Política de privacidad
             </Link>
+            <CookieSettingsButton className="hover:text-white" />
           </div>
         </div>
       </div>

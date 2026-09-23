@@ -1,11 +1,47 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/page-hero";
+import CookieSettingsButton from "@/components/cookie-settings-button";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Política de cookies",
   description: "Política de cookies de EPSIG Consultores SL.",
 };
+
+type CookieRow = { name: string; provider: string; purpose: string; duration: string };
+
+const technicalCookies: CookieRow[] = [
+  {
+    name: "epsig-cookie-consent",
+    provider: site.name,
+    purpose: "Guarda tus preferencias de cookies (almacenamiento local del navegador).",
+    duration: "12 meses",
+  },
+  {
+    name: "__cf_bm",
+    provider: "Cloudflare",
+    purpose: "Seguridad: distingue el tráfico legítimo de bots y ataques.",
+    duration: "30 minutos",
+  },
+];
+
+const analyticsCookies: CookieRow[] = [
+  {
+    name: "_ga",
+    provider: "Google (Analytics)",
+    purpose: "Distingue usuarios de forma anónima para obtener estadísticas de uso.",
+    duration: "2 años",
+  },
+  {
+    name: "_ga_<ID>",
+    provider: "Google (Analytics)",
+    purpose: "Mantiene el estado de la sesión para las estadísticas de uso.",
+    duration: "2 años",
+  },
+];
+
+// La tabla de analítica solo aparece cuando Google Analytics está configurado.
+const analyticsEnabled = Boolean(process.env.NEXT_PUBLIC_GA_ID);
 
 export default function PoliticaDeCookiesPage() {
   return (
@@ -16,36 +52,99 @@ export default function PoliticaDeCookiesPage() {
           <h2 className="mb-3 text-xl text-ink">¿Qué son las cookies?</h2>
           <p>
             Las cookies son pequeños archivos que se almacenan en tu navegador al visitar
-            un sitio web. Se usan para recordar información sobre tu visita.
+            un sitio web. Se usan para recordar información sobre tu visita, garantizar la
+            seguridad o, si lo aceptas, obtener estadísticas de uso.
           </p>
 
-          <h2 className="mt-8 mb-3 text-xl text-ink">Cookies que utilizamos</h2>
+          <h2 className="mt-8 mb-3 text-xl text-ink">Tipos de cookies y consentimiento</h2>
           <p>
-            Este sitio web utiliza únicamente las cookies técnicas estrictamente
-            necesarias para su funcionamiento y seguridad. No utilizamos cookies de
-            analítica, publicidad o redes sociales, por lo que no es necesario solicitar tu
-            consentimiento.
-          </p>
-          <p className="mt-3">
-            Nuestro proveedor de seguridad y distribución de contenidos, Cloudflare, puede
-            instalar cookies técnicas (por ejemplo, <code>__cf_bm</code>) para proteger el
-            sitio frente a bots y ataques. Estas cookies no se usan para identificarte ni
-            para fines publicitarios.
+            Las cookies <strong className="text-ink">técnicas</strong> son necesarias para que
+            la web funcione y no requieren tu consentimiento. El resto de categorías
+            (funcionales, analíticas y de marketing) solo se activan si las aceptas en el
+            aviso de cookies, y puedes cambiar tu elección en cualquier momento.
           </p>
 
-          <h2 className="mt-8 mb-3 text-xl text-ink">Cómo desactivar las cookies</h2>
+          <h3 className="mt-6 mb-2 text-base font-semibold text-ink">Cookies técnicas</h3>
+          <CookieTable rows={technicalCookies} />
+
+          {analyticsEnabled && (
+            <>
+              <h3 className="mt-6 mb-2 text-base font-semibold text-ink">
+                Cookies analíticas (solo con tu consentimiento)
+              </h3>
+              <CookieTable rows={analyticsCookies} />
+              <p className="mt-3">
+                Google Analytics puede implicar transferencias internacionales de datos a
+                Estados Unidos, amparadas en el Marco de Privacidad de Datos UE-EE. UU. Más
+                información en la{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  política de privacidad de Google
+                </a>
+                .
+              </p>
+            </>
+          )}
+
+          {!analyticsEnabled && (
+            <p className="mt-4">
+              Actualmente no utilizamos cookies funcionales, analíticas ni de marketing.
+            </p>
+          )}
+
+          <h2 className="mt-8 mb-3 text-xl text-ink">Cómo cambiar o retirar tu consentimiento</h2>
           <p>
-            Puedes permitir, bloquear o eliminar las cookies instaladas en tu equipo
-            mediante la configuración de tu navegador.
+            Puedes modificar tus preferencias en cualquier momento desde el enlace
+            «Configurar cookies» del pie de página o con este botón:
+          </p>
+          <CookieSettingsButton className="mt-4 rounded-full bg-ink px-5 py-2.5 text-[13.5px] font-semibold text-white transition-colors hover:bg-primary" />
+          <p className="mt-4">
+            También puedes bloquear o eliminar las cookies desde la configuración de tu
+            navegador, aunque bloquear las técnicas puede impedir que algunas partes de la
+            web funcionen correctamente.
           </p>
 
           <h2 className="mt-8 mb-3 text-xl text-ink">Más información</h2>
           <p>
             Si tienes dudas sobre esta política de cookies, puedes contactarnos en{" "}
-            {site.email}.
+            <a href={`mailto:${site.email}`} className="text-primary hover:underline">
+              {site.email}
+            </a>
+            .
           </p>
         </div>
       </section>
     </>
+  );
+}
+
+function CookieTable({ rows }: { rows: CookieRow[] }) {
+  return (
+    <div className="overflow-x-auto rounded-brand border border-line">
+      <table className="w-full min-w-[520px] text-left text-[13.5px]">
+        <thead className="bg-surface-alt text-ink">
+          <tr>
+            <th className="px-4 py-2.5 font-semibold">Cookie</th>
+            <th className="px-4 py-2.5 font-semibold">Proveedor</th>
+            <th className="px-4 py-2.5 font-semibold">Finalidad</th>
+            <th className="px-4 py-2.5 font-semibold">Duración</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.name} className="border-t border-line align-top">
+              <td className="px-4 py-2.5 font-mono text-[12.5px] text-ink">{row.name}</td>
+              <td className="px-4 py-2.5">{row.provider}</td>
+              <td className="px-4 py-2.5">{row.purpose}</td>
+              <td className="px-4 py-2.5 whitespace-nowrap">{row.duration}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

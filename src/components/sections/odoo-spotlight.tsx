@@ -20,9 +20,7 @@ export default function OdooSpotlight() {
           {odooModules.map((mod) => (
             <div
               key={mod.code}
-              className={`rounded-2xl border border-white/10 bg-white/[0.04] px-3.5 py-5.5 text-center transition-colors hover:border-accent hover:bg-white/[0.07] ${
-                mod.soon ? "opacity-45" : ""
-              }`}
+              className="rounded-2xl border border-white/10 bg-white/[0.04] px-3.5 py-5.5 text-center transition-colors hover:border-accent hover:bg-white/[0.07]"
             >
               <div
                 className="mx-auto mb-2.5 flex h-9.5 w-9.5 items-center justify-center rounded-[10px] font-mono text-[12.5px] font-semibold text-white"

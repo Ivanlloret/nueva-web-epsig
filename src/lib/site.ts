@@ -69,14 +69,14 @@ export const pillars = [
 ] as const;
 
 export const odooModules = [
-  { code: "CRM", label: "CRM", color: "var(--color-primary)", soon: false },
-  { code: "€", label: "Ventas", color: "var(--color-accent)", soon: false },
-  { code: "Cp", label: "Compras", color: "var(--color-chip-amber)", soon: false },
-  { code: "Ct", label: "Contabilidad", color: "var(--color-chip-slate)", soon: false },
-  { code: "Inv", label: "Inventario", color: "var(--color-secondary)", soon: false },
-  { code: "Fb", label: "Fabricación · pronto", color: "var(--color-chip-muted)", soon: true },
-  { code: "RH", label: "RRHH · pronto", color: "var(--color-chip-muted)", soon: true },
-  { code: "POS", label: "TPV · pronto", color: "var(--color-chip-muted)", soon: true },
+  { code: "CRM", label: "CRM", color: "var(--color-primary)" },
+  { code: "€", label: "Ventas", color: "var(--color-accent)" },
+  { code: "Cp", label: "Compras", color: "var(--color-chip-amber)" },
+  { code: "Ct", label: "Contabilidad", color: "var(--color-chip-slate)" },
+  { code: "Inv", label: "Inventario", color: "var(--color-secondary)" },
+  { code: "Fb", label: "Fabricación", color: "var(--color-primary-light)" },
+  { code: "RH", label: "RRHH", color: "var(--color-chip-amber)" },
+  { code: "POS", label: "TPV", color: "var(--color-accent)" },
 ] as const;
 
 export const sectors = [

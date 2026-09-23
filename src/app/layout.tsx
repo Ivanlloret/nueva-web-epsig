@@ -4,6 +4,8 @@ import "./globals.css";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
 import ScrollProgress from "@/components/scroll-progress";
+import CookieBanner from "@/components/cookie-banner";
+import GoogleAnalytics from "@/components/google-analytics";
 import { site } from "@/lib/site";
 
 const spaceGrotesk = Space_Grotesk({
@@ -31,6 +33,10 @@ export const metadata: Metadata = {
     template: `%s — ${site.name}`,
   },
   description: site.description,
+  // Search Console: código de la meta etiqueta "google-site-verification" (no instala cookies).
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
   openGraph: {
     title: site.legalName,
     description: site.description,
@@ -52,6 +58,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
+        <CookieBanner />
+        <GoogleAnalytics />
       </body>
     </html>
   );
