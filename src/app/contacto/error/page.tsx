@@ -16,11 +16,11 @@ export default function ContactoErrorPage() {
         <div className="mx-auto flex max-w-xl flex-col items-center gap-6 px-6 text-center text-[15px] leading-relaxed text-ink-soft">
           <p>
             Vuelve a intentarlo en unos minutos o, si lo prefieres, escríbenos directamente a{" "}
-            <a href={`mailto:${site.email}`} className="font-medium text-primary hover:underline">
+            <a href={`mailto:${site.email}`} className="font-medium text-primary underline underline-offset-2 hover:no-underline">
               {site.email}
             </a>{" "}
             o llámanos al{" "}
-            <a href={telHref(site.phones[0])} className="font-medium text-primary hover:underline">
+            <a href={telHref(site.phones[0])} className="font-medium text-primary underline underline-offset-2 hover:no-underline">
               {site.phones[0]}
             </a>
             .

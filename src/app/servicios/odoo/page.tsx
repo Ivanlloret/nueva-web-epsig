@@ -44,10 +44,6 @@ export default function OdooPage() {
   return (
     <>
       <PageHero
-        breadcrumbs={[
-          { label: "Servicios", href: "/servicios" },
-          { label: "Odoo ERP", href: "/servicios/odoo" },
-        ]}
         eyebrow="Servicio estrella · Partner oficial Odoo"
         title="Odoo ERP, implantado por quien entiende de empresa"
         lead="No nos limitamos a venderte licencias: acompañamos la implantación de principio a fin, desde el diagnóstico hasta el soporte del día a día."

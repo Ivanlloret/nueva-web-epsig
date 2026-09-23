@@ -10,10 +10,6 @@ export const metadata: Metadata = {
 export default function TransformacionDigitalPage() {
   return (
     <ServiceDetail
-      breadcrumbs={[
-        { label: "Servicios", href: "/servicios" },
-        { label: "Transformación Digital", href: "/servicios/transformacion-digital" },
-      ]}
       eyebrow="Transformación Digital"
       title="Automatización e IA aplicadas a tu día a día, no a la teoría"
       lead="Digitalizamos los procesos que realmente te quitan tiempo — y, cuando aplica, te ayudamos a financiarlo."

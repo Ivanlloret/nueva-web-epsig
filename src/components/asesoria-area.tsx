@@ -18,11 +18,6 @@ export default function AsesoriaArea({ slug }: { slug: AreaSlug }) {
   const area = getArea(slug);
   return (
     <CatalogDetail
-      breadcrumbs={[
-        { label: "Servicios", href: "/servicios" },
-        { label: "Consultoría Empresarial", href: "/servicios/consultoria-empresarial" },
-        { label: area.pageTitle, href: `/${area.slug}` },
-      ]}
       eyebrow="Consultoría Empresarial"
       title={area.pageTitle}
       body={area.body}

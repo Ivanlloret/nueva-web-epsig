@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import {
   allChoices,
@@ -49,9 +48,8 @@ export default function CookieBanner() {
   }
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
+    visible && (
+        <div
           role="dialog"
           aria-modal="false"
           aria-labelledby="cookie-banner-title"
@@ -59,11 +57,7 @@ export default function CookieBanner() {
             // Escape cierra la configuración si ya había una elección guardada.
             if (event.key === "Escape" && settingsOpen && consent) closeSettings();
           }}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 24 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-2xl rounded-panel border border-line bg-surface p-5 shadow-[0_24px_60px_-20px_rgba(11,18,32,.35)] sm:p-6"
+          className="pop-in fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-2xl rounded-panel border border-line bg-surface p-5 shadow-[0_24px_60px_-20px_rgba(11,18,32,.35)] sm:p-6"
         >
           <h2
             id="cookie-banner-title"
@@ -78,7 +72,7 @@ export default function CookieBanner() {
             aceptas, cookies opcionales para las finalidades que elijas. Puedes cambiar tu
             decisión en cualquier momento desde «Configurar cookies», en el pie de página. Más
             información en nuestra{" "}
-            <Link href="/politica-de-cookies" className="font-medium text-primary hover:underline">
+            <Link href="/politica-de-cookies" className="font-medium text-primary underline underline-offset-2 hover:no-underline">
               política de cookies
             </Link>
             .
@@ -113,9 +107,8 @@ export default function CookieBanner() {
             <BannerButton onClick={() => decide(allChoices(false))}>Rechazar todas</BannerButton>
             <BannerButton onClick={() => decide(allChoices(true))}>Aceptar todas</BannerButton>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+    )
   );
 }
 

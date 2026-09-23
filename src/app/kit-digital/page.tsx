@@ -17,7 +17,6 @@ export default function KitDigitalPage() {
   return (
     <>
       <PageHero
-        breadcrumbs={[{ label: "Kit Digital", href: "/kit-digital" }]}
         eyebrow="Agente Digitalizador Adherido"
         title="Kit Digital: soluciones digitales para tu pyme"
         lead="Un programa del Gobierno de España, financiado por la Unión Europea – NextGenerationEU, para impulsar la digitalización de pymes y autónomos. Como Agente Digitalizador Adherido, implantamos todas sus soluciones."

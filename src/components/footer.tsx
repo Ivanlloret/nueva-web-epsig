@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_0.9fr]">
           <div>
             <Link href="/" className="inline-flex" aria-label={`${site.name} — Inicio`}>
-              <Image src={logoWhite} alt={site.name} className="h-11 w-auto" />
+              <Image src={logoWhite} alt={site.name} sizes="160px" className="h-11 w-auto" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-mist-faint">
               {site.footerTagline}

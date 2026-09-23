@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { motion } from "framer-motion";
 import { site } from "@/lib/site";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -55,12 +54,9 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <motion.div
+      <div
         role="status"
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-brand border border-accent/30 bg-accent-pale p-8 text-center"
+        className="pop-in rounded-brand border border-accent/30 bg-accent-pale p-8 text-center"
       >
         <h3 ref={successRef} tabIndex={-1} className="mb-2 text-lg font-semibold text-ink outline-none">
           ¡Gracias! Hemos recibido tu mensaje.
@@ -68,7 +64,7 @@ export default function ContactForm() {
         <p className="text-sm text-ink-soft">
           Te hemos enviado un correo de confirmación y te responderemos lo antes posible.
         </p>
-      </motion.div>
+      </div>
     );
   }
 
@@ -118,7 +114,7 @@ export default function ContactForm() {
         />
         <span>
           He leído y acepto la{" "}
-          <Link href="/politica-de-privacidad" target="_blank" className="font-medium text-primary hover:underline">
+          <Link href="/politica-de-privacidad" target="_blank" className="font-medium text-primary underline underline-offset-2 hover:no-underline">
             política de privacidad
             <span className="sr-only"> (se abre en una pestaña nueva)</span>
           </Link>

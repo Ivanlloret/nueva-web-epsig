@@ -1,11 +1,9 @@
 import Link from "next/link";
 import PageHero from "@/components/page-hero";
-import type { Crumb } from "@/components/breadcrumbs";
 import Reveal from "@/components/reveal";
 import CtaBand from "@/components/sections/cta-band";
 
 export default function CatalogDetail({
-  breadcrumbs,
   eyebrow,
   title,
   lead,
@@ -19,7 +17,6 @@ export default function CatalogDetail({
   ctaLabel,
   notice,
 }: {
-  breadcrumbs?: Crumb[];
   eyebrow: string;
   title: string;
   lead?: string;
@@ -35,7 +32,7 @@ export default function CatalogDetail({
 }) {
   return (
     <>
-      <PageHero eyebrow={eyebrow} title={title} lead={lead} breadcrumbs={breadcrumbs} />
+      <PageHero eyebrow={eyebrow} title={title} lead={lead} />
 
       <section className="py-20 sm:py-24">
         <div className="mx-auto max-w-3xl px-6">

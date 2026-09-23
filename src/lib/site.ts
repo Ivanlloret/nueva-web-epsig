@@ -96,7 +96,7 @@ export const pillars = [
   {
     slug: "proteccion-del-negocio",
     code: "PN",
-    color: "var(--color-accent)",
+    color: "var(--color-accent-strong)",
     title: "Protección del Negocio",
     summary:
       "Ciberseguridad gestionada: auditoría, antivirus, backup, correo seguro y continuidad de negocio.",
@@ -105,13 +105,13 @@ export const pillars = [
 
 export const odooModules = [
   { code: "CRM", label: "CRM", color: "var(--color-primary)" },
-  { code: "€", label: "Ventas", color: "var(--color-accent)" },
+  { code: "€", label: "Ventas", color: "var(--color-accent-strong)" },
   { code: "Cp", label: "Compras", color: "var(--color-chip-amber)" },
   { code: "Ct", label: "Contabilidad", color: "var(--color-chip-slate)" },
   { code: "Inv", label: "Inventario", color: "var(--color-secondary)" },
-  { code: "Fb", label: "Fabricación", color: "var(--color-primary-light)" },
+  { code: "Fb", label: "Fabricación", color: "var(--color-chip-blue)" },
   { code: "RH", label: "RRHH", color: "var(--color-chip-amber)" },
-  { code: "POS", label: "TPV", color: "var(--color-accent)" },
+  { code: "POS", label: "TPV", color: "var(--color-accent-strong)" },
 ] as const;
 
 export const sectors = [
@@ -355,6 +355,62 @@ export function telHref(phone: string) {
   return `tel:+34${phone.replace(/\s/g, "")}`;
 }
 
+// Software propio
+export const software = {
+  camping: {
+    href: "/software/control-electrico-camping",
+    title: "Control eléctrico para campings",
+    summary: "Check-in, clientes, electricidad por parcela, tickets y caja en un solo panel.",
+  },
+  conectores: {
+    href: "/software/conectores",
+    title: "Conectores de software",
+    summary: "Forvenues, Ágora, Sage y FACe trabajando juntos, sin teclear dos veces.",
+  },
+} as const;
+
+export const connectors = [
+  {
+    id: "forvenues-agora",
+    from: "Forvenues",
+    to: "Ágora",
+    title: "Conector Forvenues → Ágora",
+    tagline: "Cada entrada vendida, registrada en tu TPV.",
+    body: "Las entradas que vendes en Forvenues se registran automáticamente como ventas en Ágora. Taquilla online y TPV cuentan la misma historia, sin tickets duplicados ni cuadres a mano.",
+    points: [
+      "Ventas de entradas integradas en tu TPV",
+      "Caja e informes con todas las ventas en un único sitio",
+      "Sin volver a teclear ni una entrada",
+    ],
+  },
+  {
+    id: "agora-sage",
+    from: "Ágora",
+    to: "Sage",
+    title: "Conector Ágora → Sage",
+    tagline: "Tus ventas, en contabilidad cada día.",
+    body: "Todos los días, las ventas de Ágora llegan a tu software de contabilidad Sage. Tu asesoría trabaja con datos al día y los cierres dejan de ser una maratón de transcribir tickets.",
+    points: [
+      "Sincronización diaria y automática",
+      "Contabilidad siempre al día",
+      "Adiós a exportar, copiar y pegar",
+    ],
+  },
+  {
+    id: "sage-face",
+    from: "Sage",
+    to: "FACe",
+    title: "Conector Sage → FACe",
+    tagline: "Factura electrónica directa desde Sage.",
+    body: "Conecta Sage con el servicio de factura electrónica FACe: las facturas salen de tu contabilidad y llegan a la Administración sin descargar archivos ni subirlos a mano a ningún portal.",
+    points: [
+      "Facturas electrónicas desde tu propio Sage",
+      "Sin subir archivos a mano al portal",
+      "Menos errores y rechazos",
+    ],
+  },
+] as const;
+
 export type NavLink = {
   label: string;
   href: string;
@@ -385,6 +441,15 @@ export const primaryNav: NavLink[] = [
         href: "/servicios/proteccion-del-negocio",
         description: "Ciberseguridad gestionada",
       },
+    ],
+  },
+  {
+    label: "Software",
+    href: "/software",
+    children: [
+      { label: "Ver todo el software", href: "/software", description: "Software propio y conectores" },
+      { label: software.camping.title, href: software.camping.href, description: "CRM para campings: parcelas, luz y caja" },
+      { label: software.conectores.title, href: software.conectores.href, description: "Forvenues · Ágora · Sage · FACe" },
     ],
   },
   {
@@ -428,6 +493,10 @@ export const footerNav = {
     { label: "Consultoría Empresarial", href: "/servicios/consultoria-empresarial" },
     { label: "Transformación Digital", href: "/servicios/transformacion-digital" },
     { label: "Ciberseguridad y Protección del Negocio", href: "/servicios/proteccion-del-negocio" },
+  ],
+  software: [
+    { label: "Control eléctrico para campings", href: "/software/control-electrico-camping" },
+    { label: "Conectores Forvenues · Ágora · Sage · FACe", href: "/software/conectores" },
   ],
   asesoria: [
     { label: "Asesoría económico-financiera", href: "/economico-financiero" },

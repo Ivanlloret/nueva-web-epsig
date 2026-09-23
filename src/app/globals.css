@@ -28,7 +28,9 @@
   --color-mist-faint: #7c8aac;
   --color-mist-accent: #8fb4ff;
 
-  --color-chip-amber: #b7791e;
+  --color-chip-amber: #94600f;
+  /* Azul para fichas con texto blanco (contraste AA). */
+  --color-chip-blue: #3f5fcc;
   --color-chip-slate: #334366;
   --color-chip-muted: #55617a;
 }
@@ -61,6 +63,7 @@
   --color-mist-accent: var(--color-mist-accent);
 
   --color-chip-amber: var(--color-chip-amber);
+  --color-chip-blue: var(--color-chip-blue);
   --color-chip-slate: var(--color-chip-slate);
   --color-chip-muted: var(--color-chip-muted);
 
@@ -155,10 +158,18 @@ h3,
 .card-spotlight {
   position: relative;
   isolation: isolate;
-  transition: box-shadow 0.35s ease;
+  transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+    translateY(var(--lift, 0px));
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease,
+    border-color 0.2s ease;
 }
-.card-spotlight:hover {
-  box-shadow: 0 24px 48px -28px rgba(11, 18, 32, 0.3);
+@media (hover: hover) {
+  .card-spotlight:hover {
+    --lift: -6px;
+    box-shadow: 0 24px 48px -28px rgba(11, 18, 32, 0.3);
+  }
 }
 .card-spotlight::before {
   content: "";
@@ -179,24 +190,90 @@ h3,
 }
 
 .scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 100%;
-  transform-origin: 0 50%;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-  z-index: 60;
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    z-index: 60;
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+@keyframes scroll-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Aparición al hacer scroll (scroll-driven animations). Sin soporte: contenido visible. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: var(--reveal-from);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.reveal {
+  --reveal-from: translate3d(0, 28px, 0);
+}
+.reveal[data-dir="down"] {
+  --reveal-from: translate3d(0, -28px, 0);
+}
+.reveal[data-dir="left"] {
+  --reveal-from: translate3d(28px, 0, 0);
+}
+.reveal[data-dir="right"] {
+  --reveal-from: translate3d(-28px, 0, 0);
+}
+.reveal[data-dir="scale"] {
+  --reveal-from: scale(0.94);
+}
+.reveal[data-dir="none"] {
+  --reveal-from: none;
+}
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+}
+
+/* Entradas sencillas de elementos que aparecen (banner de cookies, confirmación del formulario). */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pop-in {
+  animation: pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Entrada de las cabeceras con CSS: visible aunque no cargue JavaScript. */
 @keyframes hero-in {
   from {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0);
+    transform: translate3d(0, 14px, 0);
   }
   to {
-    opacity: 1;
     transform: none;
   }
 }
@@ -208,7 +285,12 @@ h3,
   html {
     scroll-behavior: auto;
   }
+  .card-spotlight {
+    transform: none !important;
+  }
   .hero-in,
+  .reveal,
+  .pop-in,
   .blob-drift,
   .blob-drift-slow,
   .gradient-pan {

@@ -29,10 +29,6 @@ export default async function KitDigitalCategoryPage({
 
   return (
     <CatalogDetail
-      breadcrumbs={[
-        { label: "Kit Digital", href: "/kit-digital" },
-        { label: category.title, href: `/kit-digital/${category.slug}` },
-      ]}
       eyebrow="Kit Digital"
       title={category.title}
       lead={category.summary}

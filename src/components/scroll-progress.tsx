@@ -1,14 +1,5 @@
-"use client";
-
-import { motion, useScroll, useSpring } from "framer-motion";
-
+// Barra de progreso de lectura con CSS (animation-timeline: scroll()), sin JavaScript.
+// En navegadores sin soporte simplemente no se muestra.
 export default function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 280,
-    damping: 32,
-    restDelta: 0.001,
-  });
-
-  return <motion.div className="scroll-progress" style={{ scaleX }} aria-hidden />;
+  return <div className="scroll-progress" aria-hidden />;
 }

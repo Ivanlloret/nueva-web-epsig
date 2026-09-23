@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Política de privacidad",
-  description: "Política de privacidad de EPSIG Consultores SL.",
+  description: `Política de privacidad de ${site.legalName}.`,
 };
 
 export default function PoliticaDePrivacidadPage() {
@@ -83,7 +83,7 @@ export default function PoliticaDePrivacidadPage() {
               href="https://www.aepd.es"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:underline"
+              className="text-primary underline underline-offset-2 hover:no-underline"
             >
               www.aepd.es
             </a>

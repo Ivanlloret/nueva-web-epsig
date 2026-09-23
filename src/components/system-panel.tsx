@@ -1,7 +1,7 @@
 const nodes = [
   { key: "hub", label: "Núcleo ERP", code: "ODOO", color: "var(--color-primary)" },
   { key: "n2", label: "Leads", code: "CRM", color: "var(--color-secondary)" },
-  { key: "n3", label: "Ventas", code: "€", color: "var(--color-accent)" },
+  { key: "n3", label: "Ventas", code: "€", color: "var(--color-accent-strong)" },
   { key: "n4", label: "Inventario", code: "Inv", color: "var(--color-chip-slate)" },
   { key: "n5", label: "Contabilidad", code: "Ct", color: "var(--color-chip-amber)" },
 ] as const;

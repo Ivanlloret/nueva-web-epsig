@@ -10,15 +10,11 @@ export const metadata: Metadata = {
 export default function ProteccionDelNegocioPage() {
   return (
     <ServiceDetail
-      breadcrumbs={[
-        { label: "Servicios", href: "/servicios" },
-        { label: "Protección del Negocio", href: "/servicios/proteccion-del-negocio" },
-      ]}
       eyebrow="Protección del Negocio"
       title="Ciberseguridad gestionada, sin que tengas que entender de informática"
       lead="Cuanto más digitalizas tu empresa, más importa protegerla. Lo hacemos con ESET, de forma gestionada."
       code="PN"
-      color="var(--color-accent)"
+      color="var(--color-accent-strong)"
       intro="Como partner de ESET auditamos, implantamos y mantenemos la seguridad de tu empresa: desde el antivirus hasta el plan de continuidad si algo falla. Tú te centras en tu negocio, nosotros en que siga funcionando."
       features={[
         {

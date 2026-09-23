@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Política de cookies",
-  description: "Política de cookies de EPSIG Consultores SL.",
+  description: `Política de cookies de ${site.legalName}.`,
 };
 
 type CookieRow = { name: string; provider: string; purpose: string; duration: string };
@@ -81,7 +81,7 @@ export default function PoliticaDeCookiesPage() {
                   href="https://policies.google.com/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary hover:underline"
+                  className="text-primary underline underline-offset-2 hover:no-underline"
                 >
                   política de privacidad de Google
                 </a>
@@ -111,7 +111,7 @@ export default function PoliticaDeCookiesPage() {
           <h2 className="mt-8 mb-3 text-xl text-ink">Más información</h2>
           <p>
             Si tienes dudas sobre esta política de cookies, puedes contactarnos en{" "}
-            <a href={`mailto:${site.email}`} className="text-primary hover:underline">
+            <a href={`mailto:${site.email}`} className="text-primary underline underline-offset-2 hover:no-underline">
               {site.email}
             </a>
             .

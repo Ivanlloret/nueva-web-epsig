@@ -17,7 +17,6 @@ export default function KitConsultingPage() {
   return (
     <>
       <PageHero
-        breadcrumbs={[{ label: "Kit Consulting", href: "/kit-consulting" }]}
         eyebrow="Asesor Digital"
         title="Kit Consulting: asesoramiento experto para digitalizar tu empresa"
         lead="Un programa del Gobierno de España, financiado por la Unión Europea – NextGenerationEU, que subvenciona servicios de asesoramiento digital para empresas de entre 10 y 249 empleados."

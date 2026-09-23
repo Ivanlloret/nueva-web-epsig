@@ -11,10 +11,6 @@ export const metadata: Metadata = {
 export default function ConsultoriaEmpresarialPage() {
   return (
     <ServiceDetail
-      breadcrumbs={[
-        { label: "Servicios", href: "/servicios" },
-        { label: "Consultoría Empresarial", href: "/servicios/consultoria-empresarial" },
-      ]}
       eyebrow="Consultoría Empresarial"
       title="La asesoría de toda la vida, con la organización que necesita una empresa que crece"
       lead="Antes de digitalizar o proteger nada, hay que tener claro cómo está tu empresa hoy: sus cuentas, su personal y su cumplimiento normativo."

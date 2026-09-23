@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { primaryNav, site } from "@/lib/site";
@@ -47,7 +46,7 @@ export default function Nav() {
     <nav className="sticky top-0 z-50 border-b border-line bg-surface/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center" aria-label={`${site.name} — Inicio`}>
-          <Image src={logo} alt={site.name} loading="eager" className="h-9 w-auto sm:h-10" />
+          <Image src={logo} alt={site.name} preload sizes="144px" className="h-9 w-auto sm:h-10" />
         </Link>
 
         <ul className="hidden items-center gap-0.5 text-sm lg:flex">
@@ -143,15 +142,10 @@ export default function Nav() {
         </button>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+      {open && (
+          <div
             id="menu-movil"
-            className="overflow-hidden border-t border-line bg-surface lg:hidden"
+            className="pop-in overflow-hidden border-t border-line bg-surface lg:hidden"
           >
             <div className="max-h-[calc(100vh-64px)] overflow-y-auto px-6 py-4">
               <ul className="flex flex-col gap-1 text-[15px]">
@@ -215,9 +209,8 @@ export default function Nav() {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </nav>
   );
 }

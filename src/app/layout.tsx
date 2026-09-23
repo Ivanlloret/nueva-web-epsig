@@ -7,25 +7,28 @@ import ScrollProgress from "@/components/scroll-progress";
 import CookieBanner from "@/components/cookie-banner";
 import GoogleAnalytics from "@/components/google-analytics";
 import StructuredData from "@/components/structured-data";
-import MotionProvider from "@/components/motion-provider";
+import CardEffects from "@/components/card-effects";
 import { site } from "@/lib/site";
 
+// Fuentes variables: un único archivo por familia en lugar de uno por grosor.
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  display: "swap",
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
+// Solo para etiquetas y precios: no se precarga para no competir con lo principal.
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -57,25 +60,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-surface text-ink">
-        {/* Sin JavaScript, el contenido animado se muestra directamente. */}
-        <noscript>
-          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
-        </noscript>
         <a
           href="#contenido"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white"
         >
           Saltar al contenido
         </a>
-        <MotionProvider>
-          <ScrollProgress />
+        <ScrollProgress />
           <Nav />
           <main id="contenido" className="flex-1">
             {children}
           </main>
           <Footer />
-          <CookieBanner />
-        </MotionProvider>
+        <CookieBanner />
+        <CardEffects />
         <GoogleAnalytics />
         <StructuredData />
       </body>

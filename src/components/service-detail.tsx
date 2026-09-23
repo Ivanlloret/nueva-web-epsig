@@ -1,12 +1,10 @@
 import PageHero from "@/components/page-hero";
-import type { Crumb } from "@/components/breadcrumbs";
 import Reveal from "@/components/reveal";
 import SectionHeading from "@/components/section-heading";
 import TiltCard from "@/components/tilt-card";
 import CtaBand from "@/components/sections/cta-band";
 
 export default function ServiceDetail({
-  breadcrumbs,
   eyebrow,
   title,
   lead,
@@ -18,7 +16,6 @@ export default function ServiceDetail({
   ctaBody,
   ctaLabel,
 }: {
-  breadcrumbs?: Crumb[];
   eyebrow: string;
   title: string;
   lead: string;
@@ -32,7 +29,7 @@ export default function ServiceDetail({
 }) {
   return (
     <>
-      <PageHero eyebrow={eyebrow} title={title} lead={lead} breadcrumbs={breadcrumbs} />
+      <PageHero eyebrow={eyebrow} title={title} lead={lead} />
 
       <section className="py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-6">

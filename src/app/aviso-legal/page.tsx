@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Aviso legal",
-  description: "Aviso legal de EPSIG Consultores SL.",
+  description: `Aviso legal de ${site.legalName}.`,
 };
 
 export default function AvisoLegalPage() {
@@ -43,7 +43,7 @@ export default function AvisoLegalPage() {
             </li>
             <li>
               <strong className="text-ink">Correo electrónico:</strong>{" "}
-              <a href={`mailto:${site.email}`} className="text-primary hover:underline">
+              <a href={`mailto:${site.email}`} className="text-primary underline underline-offset-2 hover:no-underline">
                 {site.email}
               </a>
             </li>

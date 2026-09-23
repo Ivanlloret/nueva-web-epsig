@@ -16,7 +16,6 @@ export default function ServiciosPage() {
   return (
     <>
       <PageHero
-        breadcrumbs={[{ label: "Servicios", href: "/servicios" }]}
         eyebrow="Servicios"
         title="Tres formas de ayudarte a funcionar mejor"
         lead="Consultoría, digitalización y protección — nunca por separado. Cada proyecto se diseña a partir de dónde está tu empresa hoy."

@@ -17,7 +17,6 @@ export default function NosotrosPage() {
   return (
     <>
       <PageHero
-        breadcrumbs={[{ label: "Nosotros", href: "/nosotros" }]}
         eyebrow="Nosotros"
         title="Ayudamos a las empresas a funcionar mejor"
         lead="Mejorar su gestión, digitalizar sus procesos y proteger su negocio — ese es el porqué detrás de cada servicio de EPSIG."

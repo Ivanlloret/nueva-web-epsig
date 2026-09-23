@@ -14,7 +14,6 @@ export default function ContactoPage() {
   return (
     <>
       <PageHero
-        breadcrumbs={[{ label: "Contacto", href: "/contacto" }]}
         eyebrow="Contacto"
         title="Hablemos de tu empresa"
         lead="Una conversación de 30 minutos, sin compromiso, para ver qué necesita tu negocio primero."

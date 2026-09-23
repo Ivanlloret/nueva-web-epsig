@@ -29,10 +29,6 @@ export default async function KitConsultingServicePage({
 
   return (
     <CatalogDetail
-      breadcrumbs={[
-        { label: "Kit Consulting", href: "/kit-consulting" },
-        { label: service.title, href: `/kit-consulting/${service.slug}` },
-      ]}
       eyebrow="Kit Consulting"
       title={service.title}
       lead={service.summary}

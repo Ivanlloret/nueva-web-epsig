@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 const shortcuts = [
   { href: "/servicios", code: "SV", color: "var(--color-primary)", title: "Servicios", body: "Consultoría, digitalización y ciberseguridad" },
   { href: "/servicios/odoo", code: "ERP", color: "var(--color-secondary)", title: "Odoo ERP", body: "Implantación completa de tu sistema de gestión" },
-  { href: "/kit-digital", code: "KD", color: "var(--color-accent)", title: "Kit Digital", body: "Web, tienda online, CRM y ciberseguridad" },
+  { href: "/kit-digital", code: "KD", color: "var(--color-accent-strong)", title: "Kit Digital", body: "Web, tienda online, CRM y ciberseguridad" },
   { href: "/kit-consulting", code: "KC", color: "var(--color-chip-amber)", title: "Kit Consulting", body: "Asesoramiento en IA, datos y procesos" },
   { href: "/servicios/consultoria-empresarial", code: "CE", color: "var(--color-chip-slate)", title: "Consultoría Empresarial", body: "Asesoría económico-financiera, laboral y fiscal" },
-  { href: "/nosotros", code: "EP", color: "var(--color-primary-light)", title: "Nosotros", body: "Quiénes somos y cómo trabajamos" },
+  { href: "/nosotros", code: "EP", color: "var(--color-chip-blue)", title: "Nosotros", body: "Quiénes somos y cómo trabajamos" },
 ];
 
 export default function NotFound() {
@@ -119,11 +119,11 @@ export default function NotFound() {
 
           <p className="mt-10 text-center text-sm text-ink-soft">
             ¿No encuentras lo que buscas? Escríbenos a{" "}
-            <a href={`mailto:${site.email}`} className="font-medium text-primary hover:underline">
+            <a href={`mailto:${site.email}`} className="font-medium text-primary underline underline-offset-2 hover:no-underline">
               {site.email}
             </a>{" "}
             o llámanos al{" "}
-            <a href={telHref(site.phones[0])} className="font-medium text-primary hover:underline">
+            <a href={telHref(site.phones[0])} className="font-medium text-primary underline underline-offset-2 hover:no-underline">
               {site.phones[0]}
             </a>
             .
