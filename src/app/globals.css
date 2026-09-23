@@ -1,26 +1,195 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ink: #0b1220;
+  --color-ink-soft: #57667e;
+  --color-ink-faint: #8c98ad;
+
+  --color-surface: #ffffff;
+  --color-surface-alt: #f2f5fb;
+  --color-surface-dark: #0a1428;
+  --color-surface-dark-2: #0f1e3d;
+
+  --color-primary: #2249c7;
+  --color-primary-light: #6c8cea;
+  --color-primary-pale: #eaf0fe;
+
+  --color-secondary: #1b2a6b;
+
+  --color-accent: #10b981;
+  --color-accent-pale: #e1faf0;
+
+  --color-line: #e1e7f2;
+
+  --color-mist: #e8eefc;
+  --color-mist-soft: #b9c7e8;
+  --color-mist-faint: #7c8aac;
+  --color-mist-accent: #8fb4ff;
+
+  --color-chip-amber: #b7791e;
+  --color-chip-slate: #334366;
+  --color-chip-muted: #55617a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-faint: var(--color-ink-faint);
+
+  --color-surface: var(--color-surface);
+  --color-surface-alt: var(--color-surface-alt);
+  --color-surface-dark: var(--color-surface-dark);
+  --color-surface-dark-2: var(--color-surface-dark-2);
+
+  --color-primary: var(--color-primary);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-pale: var(--color-primary-pale);
+
+  --color-secondary: var(--color-secondary);
+
+  --color-accent: var(--color-accent);
+  --color-accent-pale: var(--color-accent-pale);
+
+  --color-line: var(--color-line);
+
+  --color-mist: var(--color-mist);
+  --color-mist-soft: var(--color-mist-soft);
+  --color-mist-faint: var(--color-mist-faint);
+  --color-mist-accent: var(--color-mist-accent);
+
+  --color-chip-amber: var(--color-chip-amber);
+  --color-chip-slate: var(--color-chip-slate);
+  --color-chip-muted: var(--color-chip-muted);
+
+  --radius-brand: 16px;
+  --radius-panel: 22px;
+
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+.flow-line-live {
+  animation: dash 3.2s linear infinite;
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -4%, 0) scale(1.08);
+  }
+}
+.blob-drift {
+  animation: drift 16s ease-in-out infinite;
+}
+.blob-drift-slow {
+  animation: drift 22s ease-in-out infinite reverse;
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.gradient-pan {
+  background-size: 200% 200%;
+  animation: gradient-pan 8s ease infinite;
+}
+
+.card-spotlight {
+  position: relative;
+  isolation: isolate;
+  transition: box-shadow 0.35s ease;
+}
+.card-spotlight:hover {
+  box-shadow: 0 24px 48px -28px rgba(11, 18, 32, 0.3);
+}
+.card-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    260px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, var(--color-primary) 14%, transparent),
+    transparent 70%
+  );
+}
+.card-spotlight:hover::before {
+  opacity: 1;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  z-index: 60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-drift,
+  .blob-drift-slow,
+  .gradient-pan {
+    animation: none !important;
+  }
 }

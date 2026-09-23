@@ -1,0 +1,33 @@
+import Reveal from "@/components/reveal";
+import SectionHeading from "@/components/section-heading";
+import TiltCard from "@/components/tilt-card";
+import { sectors } from "@/lib/site";
+
+export default function Sectors() {
+  return (
+    <section id="sectores" className="py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <Reveal>
+          <SectionHeading eyebrow="Sectores" title="Adaptado al día a día de tu negocio" />
+        </Reveal>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {sectors.map((sector, index) => (
+            <Reveal key={sector.id} delay={index * 0.06}>
+              <TiltCard
+                id={sector.id}
+                className={`scroll-mt-24 rounded-brand border p-6.5 ${
+                  sector.highlight
+                    ? "border-primary-light bg-primary-pale"
+                    : "border-line bg-surface"
+                }`}
+              >
+                <h4 className="mb-2 text-[16.5px]">{sector.title}</h4>
+                <p className="text-[13px] leading-relaxed text-ink-soft">{sector.body}</p>
+              </TiltCard>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
