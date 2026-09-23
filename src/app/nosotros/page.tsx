@@ -34,9 +34,7 @@ export default function NosotrosPage() {
               <p>
                 EPSIG Consultores se constituyó en {site.foundedYear} con la intención de
                 prestar un servicio integral de consultoría a empresas, especialmente en
-                digitalización. Somos un equipo de abogados, economistas y gente de TIC con
-                largo recorrido en cada campo, que trabaja directamente con el cliente el
-                tiempo que haga falta. No nos limitamos a sugerir soluciones: nos implicamos
+                digitalización. No nos limitamos a sugerir soluciones: nos implicamos
                 en su desarrollo hasta cumplir el objetivo.
               </p>
             </Reveal>

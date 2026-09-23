@@ -4,10 +4,29 @@
     {
       "name": "epsig-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000,
       "autoPort": true,
-      "env": { "NEXT_TELEMETRY_DISABLED": "1" }
+      "env": {
+        "NEXT_TELEMETRY_DISABLED": "1"
+      }
+    },
+    {
+      "name": "epsig-prod",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "start",
+        "-p",
+        "3100"
+      ],
+      "port": 3100,
+      "env": {
+        "NEXT_TELEMETRY_DISABLED": "1"
+      }
     }
   ]
 }

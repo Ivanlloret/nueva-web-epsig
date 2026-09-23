@@ -39,6 +39,11 @@ export default function Footer() {
                 <li key={office.name}>
                   <span className="block text-mist">{office.address}</span>
                   <span className="block text-mist-faint">{office.locality}</span>
+                  {office.hours.map((line) => (
+                    <span key={line} className="mt-1 block text-[12.5px] text-mist-soft">
+                      {line}
+                    </span>
+                  ))}
                 </li>
               ))}
             </ul>
@@ -60,8 +65,6 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <FooterHeading className="mt-6">Horario</FooterHeading>
-            <p className="text-sm text-mist">{site.hours}</p>
           </div>
 
           <FooterCol title="Empresa" items={footerNav.empresa} />

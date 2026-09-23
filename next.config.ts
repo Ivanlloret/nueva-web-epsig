@@ -16,11 +16,58 @@ const legacyRedirects: [source: string, destination: string][] = [
   ["/confirmacion-de-donacion", "/"],
   ["/donacion-fallida", "/"],
   ["/escritorio-del-donante", "/"],
+  ["/blog", "/"],
+];
+
+const isDev = process.env.NODE_ENV === "development";
+
+// Dominios de Google Analytics 4 (solo se cargan si el usuario acepta las cookies analíticas).
+const googleAnalytics = {
+  script: "https://www.googletagmanager.com",
+  connect:
+    "https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
+  img: "https://*.google-analytics.com https://*.googletagmanager.com",
+};
+
+// CSP sin nonces para mantener las páginas estáticas: Next.js necesita 'unsafe-inline'
+// para sus scripts inline. En desarrollo React requiere además 'unsafe-eval'.
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${googleAnalytics.script}`,
+  "style-src 'self' 'unsafe-inline'",
+  `img-src 'self' data: blob: ${googleAnalytics.img}`,
+  "font-src 'self'",
+  `connect-src 'self' ${googleAnalytics.connect}`,
+  "frame-src 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  ...(isDev ? [] : ["upgrade-insecure-requests"]),
+].join("; ");
+
+const securityHeaders = [
+  { key: "Content-Security-Policy", value: contentSecurityPolicy },
+  // HSTS: solo HTTPS durante 1 año, únicamente en este dominio (sin subdominios).
+  { key: "Strict-Transport-Security", value: "max-age=31536000" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
+  },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
 ];
 
 const nextConfig: NextConfig = {
   // Igual que WordPress: todas las URLs terminan en "/".
   trailingSlash: true,
+  // No anunciar "X-Powered-By: Next.js".
+  poweredByHeader: false,
+  headers() {
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
   redirects() {
     return legacyRedirects.map(([source, destination]) => ({
       source,

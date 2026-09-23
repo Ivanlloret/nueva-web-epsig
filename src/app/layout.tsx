@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import ScrollProgress from "@/components/scroll-progress";
 import CookieBanner from "@/components/cookie-banner";
 import GoogleAnalytics from "@/components/google-analytics";
+import StructuredData from "@/components/structured-data";
 import { site } from "@/lib/site";
 
 const spaceGrotesk = Space_Grotesk({
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <CookieBanner />
         <GoogleAnalytics />
+        <StructuredData />
       </body>
     </html>
   );

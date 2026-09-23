@@ -51,21 +51,19 @@ export default function ContactoPage() {
               </div>
 
               <div>
-                <h3 className="mb-1 text-xs font-semibold uppercase tracking-widest text-ink-soft">
-                  Horario
-                </h3>
-                <p>{site.hours}</p>
-              </div>
-
-              <div>
                 <h3 className="mb-2 text-xs font-semibold uppercase tracking-widest text-ink-soft">
-                  Oficinas
+                  Oficinas y horario
                 </h3>
                 <div className="flex flex-col gap-4">
                   {site.offices.map((office) => (
                     <div key={office.name} className="rounded-brand border border-line bg-surface-alt p-4">
                       <p className="font-medium text-ink">{office.address}</p>
                       <p className="text-ink-soft">{office.locality}</p>
+                      <div className="mt-2 border-t border-line pt-2 text-[13px] text-ink-soft">
+                        {office.hours.map((line) => (
+                          <p key={line}>{line}</p>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>

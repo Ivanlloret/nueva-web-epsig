@@ -13,7 +13,6 @@ export const site = {
   url: "https://epsigconsultores.com",
   email: "info@epsigconsultores.com",
   phones: ["623 047 948", "690 64 29 17", "628 709 257"],
-  hours: "Lunes a viernes: de 9:00 a 14:00 h.",
   footerTagline: "Epsig Consultores, te ayudamos a empoderar tu empresa.",
   clientPortalUrl: "https://epsig.matrixconnect.eu/apps/login/",
   offices: [
@@ -21,11 +20,33 @@ export const site = {
       name: "Gata de Gorgos",
       address: "Calle Doctor Moratal 1",
       locality: "Gata de Gorgos (Alicante)",
+      // Datos para Google (JSON-LD), tomados de la ficha de Google Business Profile.
+      streetAddress: "Calle Doctor Moratal 1, 4.º dcha.",
+      postalCode: "03740",
+      city: "Gata de Gorgos",
+      region: "Alicante",
+      geo: { lat: 38.7761043, lng: 0.0841059 },
+      mapsUrl: "https://maps.google.com/?cid=3687205675597459311",
+      // Horario igual que en la ficha de Google Business Profile. `hours` (texto) y
+      // `openingHours` (para Google) deben coincidir.
+      hours: ["Lunes a viernes: de 10:00 a 15:00 h."],
+      openingHours: [{ days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "10:00", closes: "15:00" }],
     },
     {
       name: "Valencia",
       address: "Avenida Blasco Ibáñez 153",
       locality: "Valencia (Valencia)",
+      streetAddress: "Avenida Blasco Ibáñez 153, 8.º, pta. 40",
+      postalCode: "46022",
+      city: "València",
+      region: "Valencia",
+      geo: { lat: 39.4718688, lng: -0.3389152 },
+      mapsUrl: "https://maps.google.com/?cid=10532530235635405959",
+      hours: ["Lunes a jueves: de 9:30 a 15:00 h.", "Viernes: de 9:30 a 14:00 h."],
+      openingHours: [
+        { days: ["Monday", "Tuesday", "Wednesday", "Thursday"], opens: "09:30", closes: "15:00" },
+        { days: ["Friday"], opens: "09:30", closes: "14:00" },
+      ],
     },
   ],
   zones: ["Marina Alta", "Valencia", "La Safor"],
@@ -116,7 +137,7 @@ export const asesoriaAreas = [
   {
     slug: "laboral",
     title: "Laboral",
-    body: "Asesoramiento jurídico-laboral y de Recursos Humanos para empresa y autónomos, con abogados especialistas en derecho laboral — desde consultas puntuales hasta la externalización completa de la administración de personal.",
+    body: "Asesoramiento laboral y de Recursos Humanos para empresas y autónomos — desde consultas puntuales hasta la externalización completa de la administración de personal: nóminas, contratos, altas y bajas en la Seguridad Social.",
   },
   {
     slug: "fiscal-contable",
@@ -367,8 +388,6 @@ export const primaryNav: NavLink[] = [
     href: "/nosotros",
     children: [
       { label: "Nosotros", href: "/nosotros" },
-      { label: "Casos de éxito", href: "/casos-de-exito" },
-      { label: "Blog", href: "/blog" },
       { label: "Precios", href: "/precios" },
     ],
   },
@@ -393,8 +412,6 @@ export const footerNav = {
   ],
   empresa: [
     { label: "Nosotros", href: "/nosotros" },
-    { label: "Casos de éxito", href: "/casos-de-exito" },
-    { label: "Blog", href: "/blog" },
     { label: "Contacto", href: "/contacto" },
     { label: "Acceso a clientes ↗", href: "https://epsig.matrixconnect.eu/apps/login/" },
   ],
