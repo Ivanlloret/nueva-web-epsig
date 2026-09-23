@@ -31,15 +31,16 @@ export default function PreciosPage() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {kitDigitalCategories.map((cat) => (
-              <div
+              <Link
                 key={cat.slug}
-                className="flex items-center justify-between gap-4 rounded-brand border border-line bg-surface-alt px-5 py-4"
+                href={`/kit-digital/${cat.slug}`}
+                className="flex min-w-0 flex-col gap-2 rounded-brand border border-line bg-surface-alt px-5 py-4 transition-colors hover:border-primary-light"
               >
-                <span className="text-[14px] font-medium text-ink">{cat.title}</span>
-                <span className="shrink-0 font-mono text-[12.5px] font-semibold text-primary">
+                <span className="text-[14px] font-medium leading-snug text-ink">{cat.title}</span>
+                <span className="break-words font-mono text-[12.5px] font-semibold leading-snug text-primary">
                   {cat.priceFrom}
                 </span>
-              </div>
+              </Link>
             ))}
           </div>
 

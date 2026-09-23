@@ -7,19 +7,61 @@ export default function Footer() {
   return (
     <footer className="bg-surface-dark-2 py-16 text-mist-soft">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="mb-11 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-[1.2fr_0.9fr_0.9fr_0.9fr]">
+        <div className="mb-11 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_0.8fr]">
           <div>
             <Link href="/" className="flex items-center gap-2 font-display text-lg font-bold text-white">
               <span className="h-2.5 w-2.5 rounded-full bg-accent" aria-hidden />
               EPSIG
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-mist-faint">
-              {site.description}
+              {site.footerTagline}
             </p>
+            <ul className="mt-5 flex gap-4 text-sm">
+              <li>
+                <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className="text-mist transition-colors hover:text-white">
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="text-mist transition-colors hover:text-white">
+                  Instagram
+                </a>
+              </li>
+            </ul>
           </div>
 
-          <FooterCol title="Servicios" items={footerNav.servicios} />
-          <FooterCol title="Financiación" items={footerNav.financiacion} />
+          <div>
+            <FooterHeading>Encuéntranos</FooterHeading>
+            <ul className="flex flex-col gap-4 text-sm leading-relaxed">
+              {site.offices.map((office) => (
+                <li key={office.name}>
+                  <span className="block text-mist">{office.address}</span>
+                  <span className="block text-mist-faint">{office.locality}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <FooterHeading>Contacto</FooterHeading>
+            <ul className="flex flex-col gap-2 text-sm">
+              {site.phones.map((phone) => (
+                <li key={phone}>
+                  <a href={`tel:+34${phone.replace(/\s/g, "")}`} className="text-mist transition-colors hover:text-white">
+                    {phone}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href={`mailto:${site.email}`} className="text-mist transition-colors hover:text-white">
+                  {site.email}
+                </a>
+              </li>
+            </ul>
+            <FooterHeading className="mt-6">Horario</FooterHeading>
+            <p className="text-sm text-mist">{site.hours}</p>
+          </div>
+
           <FooterCol title="Empresa" items={footerNav.empresa} />
         </div>
 
@@ -53,9 +95,7 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h5 className="mb-4 text-xs font-semibold uppercase tracking-widest text-mist-faint">
-        {title}
-      </h5>
+      <FooterHeading>{title}</FooterHeading>
       <ul className="flex flex-col gap-2.5 text-sm">
         {items.map((item) =>
           item.href.startsWith("http") ? (
@@ -79,5 +119,13 @@ function FooterCol({
         )}
       </ul>
     </div>
+  );
+}
+
+function FooterHeading({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <h5 className={`mb-4 text-xs font-semibold uppercase tracking-widest text-mist-faint ${className}`}>
+      {children}
+    </h5>
   );
 }

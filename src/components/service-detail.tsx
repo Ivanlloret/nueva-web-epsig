@@ -21,7 +21,7 @@ export default function ServiceDetail({
   lead: string;
   code: string;
   color: string;
-  intro: string;
+  intro?: string;
   features: { title: string; body: string }[];
   ctaTitle?: string;
   ctaBody?: string;
@@ -40,7 +40,7 @@ export default function ServiceDetail({
             >
               {code}
             </div>
-            <p className="text-base leading-relaxed text-ink-soft">{intro}</p>
+            {intro && <p className="text-base leading-relaxed text-ink-soft">{intro}</p>}
           </div>
 
           <SectionHeading eyebrow="Qué incluye" title="Servicios dentro de esta área" align="left" />

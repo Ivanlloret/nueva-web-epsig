@@ -16,7 +16,6 @@ export default function ConsultoriaEmpresarialPage() {
       lead="Antes de digitalizar o proteger nada, hay que tener claro cómo está tu empresa hoy: sus cuentas, su personal y su cumplimiento normativo."
       code="CE"
       color="var(--color-primary)"
-      intro="Somos un equipo de abogados y economistas que trabaja directamente con cada cliente: asesoría económico-financiera, laboral y fiscal-contable, tanto para empresas como para particulares y empresa familiar."
       features={asesoriaAreas.map((area) => ({ title: area.title, body: area.body }))}
       ctaTitle="¿Hablamos de la organización de tu empresa?"
       ctaBody="Una primera conversación gratuita para entender dónde estás y qué necesitas."
