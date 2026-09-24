@@ -34,7 +34,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          <FooterCol title="Servicios" items={footerNav.servicios} />
+          <div className="flex flex-col gap-8">
+            <FooterCol title="Servicios" items={footerNav.servicios} />
+            <FooterCol title="Software" items={footerNav.software} />
+          </div>
           <div className="flex flex-col gap-8">
             <FooterCol title="Asesoría" items={footerNav.asesoria} />
             <FooterCol title="Programas públicos" items={footerNav.financiacion} />

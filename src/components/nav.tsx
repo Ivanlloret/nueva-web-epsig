@@ -44,20 +44,20 @@ export default function Nav() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-line bg-surface/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center" aria-label={`${site.name} — Inicio`}>
-          <Image src={logo} alt={site.name} preload sizes="144px" className="h-9 w-auto sm:h-10" />
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+        <Link href="/" className="flex shrink-0 items-center" aria-label={`${site.name} — Inicio`}>
+          <Image src={logo} alt={site.name} preload sizes="144px" className="h-9 w-auto shrink-0 sm:h-10" />
         </Link>
 
-        <ul className="hidden items-center gap-0.5 text-sm lg:flex">
-          {primaryNav.map((item) => (
+        <ul className="hidden items-center text-[13.5px] lg:flex xl:gap-0.5 xl:text-sm">
+          {primaryNav.map((item, index) => (
             <li key={item.href} className="group relative">
               {item.external ? (
                 <a
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full px-3.5 py-2 font-medium text-ink-soft transition-colors hover:bg-surface-alt hover:text-ink"
+                  className="whitespace-nowrap rounded-full px-2.5 py-2 font-medium text-ink-soft transition-colors hover:bg-surface-alt hover:text-ink xl:px-3.5"
                 >
                   {item.label} <span aria-hidden>↗</span>
                   <span className="sr-only"> (se abre en una pestaña nueva)</span>
@@ -66,7 +66,7 @@ export default function Nav() {
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`relative rounded-full px-3.5 py-2 font-medium transition-colors hover:bg-surface-alt hover:text-ink ${
+                  className={`relative whitespace-nowrap rounded-full px-2.5 py-2 font-medium transition-colors hover:bg-surface-alt hover:text-ink xl:px-3.5 ${
                     item.highlight || isActive(item.href) ? "font-semibold text-primary" : "text-ink-soft"
                   }`}
                 >
@@ -82,7 +82,7 @@ export default function Nav() {
 
               {item.children && (
                 <div
-                  className={`invisible absolute left-0 top-full z-50 max-h-[70vh] overflow-y-auto rounded-2xl border border-line bg-surface p-2 opacity-0 shadow-[0_22px_40px_-20px_rgba(11,18,32,.25)] transition-all group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 ${
+                  className={`invisible absolute top-full z-50 ${index >= 3 ? "right-0" : "left-0"} max-h-[70vh] overflow-y-auto rounded-2xl border border-line bg-surface p-2 opacity-0 shadow-[0_22px_40px_-20px_rgba(11,18,32,.25)] transition-all group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 ${
                     item.children.length > 5 ? "grid w-[560px] grid-cols-2 gap-1" : "w-72"
                   }`}
                 >
@@ -104,16 +104,16 @@ export default function Nav() {
           ))}
         </ul>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden shrink-0 items-center gap-3 lg:flex">
           <Link
             href="/contacto"
-            className="rounded-full border-[1.5px] border-line px-5 py-2.5 text-[13.5px] font-semibold transition-colors hover:border-ink"
+            className="hidden whitespace-nowrap rounded-full border-[1.5px] border-line px-5 py-2.5 text-[13.5px] font-semibold transition-colors hover:border-ink xl:inline-block"
           >
             Contacto
           </Link>
           <Link
             href="/contacto#diagnostico"
-            className="inline-block rounded-full bg-ink px-5.5 py-3 text-[13.5px] font-semibold text-white shadow-[0_10px_24px_-10px_rgba(34,73,199,.6)] transition hover:scale-[1.04] hover:bg-primary active:scale-[0.97]"
+            className="inline-block whitespace-nowrap rounded-full bg-ink px-5 py-3 text-[13.5px] font-semibold text-white shadow-[0_10px_24px_-10px_rgba(34,73,199,.6)] transition hover:scale-[1.04] hover:bg-primary active:scale-[0.97]"
           >
             Diagnóstico gratuito
           </Link>

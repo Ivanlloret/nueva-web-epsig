@@ -52,7 +52,7 @@ export default function CampingDashboard() {
                   <span className="font-mono text-[10.5px] font-semibold text-white">{plot.id}</span>
                   <span className={`h-2 w-2 rounded-full ${style.dot}`} />
                 </div>
-                <span className="mt-1.5 block font-mono text-[10px] text-mist-soft">
+                <span className="mt-1.5 block whitespace-nowrap font-mono text-[9.5px] text-mist-soft">
                   {plot.kwh !== undefined ? `${plot.kwh.toFixed(1)} kWh` : "—"}
                 </span>
               </div>
@@ -63,9 +63,9 @@ export default function CampingDashboard() {
         {/* Consumo semanal + caja */}
         <div className="flex flex-col gap-3">
           <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
-            <div className="mb-3 flex items-baseline justify-between">
-              <span className="text-[11px] font-semibold text-mist">Consumo semanal</span>
-              <span className="font-mono text-[10px] text-mist-faint">kWh · orientativo</span>
+            <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-2">
+              <span className="text-[11px] font-semibold text-mist">Consumo semanal (kWh)</span>
+              <span className="font-mono text-[10px] text-mist-faint">orientativo</span>
             </div>
             <div className="flex h-20 items-end gap-1.5">
               {week.map((value, index) => (
