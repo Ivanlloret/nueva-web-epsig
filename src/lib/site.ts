@@ -99,7 +99,7 @@ export const pillars = [
     color: "var(--color-accent-strong)",
     title: "Protección del Negocio",
     summary:
-      "Ciberseguridad gestionada: auditoría, antivirus, backup, correo seguro y continuidad de negocio.",
+      "Ciberseguridad gestionada en tres paquetes mensuales para servidores, webs y equipos de trabajo, con ESET.",
   },
 ] as const;
 
